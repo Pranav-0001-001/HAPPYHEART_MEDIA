@@ -1,0 +1,20 @@
+{
+  "name": "happyheart-media-website",
+  "version": "1.0.0",
+  "description": "Official website & client project intake portal for HAPPY HEART MEDIA",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "dev": "npx serve . -l 3000"
+  },
+  "keywords": [
+    "agency",
+    "freelance",
+    "web-development",
+    "ads",
+    "marketing",
+    "happyheart-media"
+  ],
+  "author": "HAPPY HEART MEDIA",
+  "license": "ISC"
+}
