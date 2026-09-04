@@ -16,5 +16,8 @@
     "happyheart-media"
   ],
   "author": "HAPPY HEART MEDIA",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
 }
