@@ -14,6 +14,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Drawer (Client Portal)
   initSubmissionsDrawer();
 
+  // Dynamic Ambient Glow & Scroll Progress
+  initAmbientBackground();
+  initScrollProgress();
+
+  // Desktop Luxury Cursor Spotlight
+  initCursorSpotlight();
+
+  // Scroll Reveal Animations
+  initScrollReveal();
+
+  // Animated Number Counters
+  initStatCounters();
+
+  // 3D Card Interactive Perspective Tilt
+  init3DCardTilt();
+
+  // Floating Back to Top Button
+  initBackToTop();
+
+  // Live Activity Toast Notifications
+  initLiveActivityToasts();
+
   // Page Specific: Intake Form (submit-work.html)
   if (document.getElementById('projectIntakeForm')) {
     initIntakeForm();
@@ -434,4 +456,309 @@ function escapeHtml(string) {
   const div = document.createElement('div');
   div.textContent = string;
   return div.innerHTML;
+}
+
+/* ==========================================================================
+   6. AMBIENT BACKGROUND & SCROLL PROGRESS
+   ========================================================================== */
+function initAmbientBackground() {
+  if (!document.querySelector('.ambient-orbs-container')) {
+    const orbsContainer = document.createElement('div');
+    orbsContainer.className = 'ambient-orbs-container';
+    orbsContainer.setAttribute('aria-hidden', 'true');
+    orbsContainer.innerHTML = `
+      <div class="ambient-orb ambient-orb-1"></div>
+      <div class="ambient-orb ambient-orb-2"></div>
+      <div class="ambient-orb ambient-orb-3"></div>
+    `;
+    document.body.prepend(orbsContainer);
+  }
+}
+
+function initScrollProgress() {
+  let bar = document.querySelector('.scroll-progress-bar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.className = 'scroll-progress-bar';
+    bar.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(bar);
+  }
+
+  const updateBar = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (scrollHeight > 0) {
+      const scrolled = (scrollTop / scrollHeight) * 100;
+      bar.style.width = `${Math.min(scrolled, 100)}%`;
+    }
+  };
+
+  window.addEventListener('scroll', updateBar, { passive: true });
+  updateBar();
+}
+
+/* ==========================================================================
+   7. LUXURY MOUSE SPOTLIGHT (DESKTOP)
+   ========================================================================== */
+function initCursorSpotlight() {
+  if (window.innerWidth < 1024 || !window.matchMedia('(hover: hover)').matches) return;
+
+  let spotlight = document.querySelector('.cursor-spotlight');
+  if (!spotlight) {
+    spotlight = document.createElement('div');
+    spotlight.className = 'cursor-spotlight';
+    spotlight.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(spotlight);
+  }
+
+  let rafId = null;
+  let mouseX = -500, mouseY = -500;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (!rafId) {
+      rafId = requestAnimationFrame(() => {
+        spotlight.style.left = `${mouseX}px`;
+        spotlight.style.top = `${mouseY}px`;
+        spotlight.style.opacity = '1';
+        rafId = null;
+      });
+    }
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', () => {
+    spotlight.style.opacity = '0';
+  });
+}
+
+/* ==========================================================================
+   8. SCROLL REVEAL (INTERSECTION OBSERVER)
+   ========================================================================== */
+function initScrollReveal() {
+  const elementsToReveal = document.querySelectorAll(`
+    .section-header,
+    .card-service,
+    .home-showcase-card,
+    .home-stats-strip .stat-item,
+    .portfolio-item-card,
+    .instagram-spotlight-card,
+    .insta-tile,
+    .faq-card,
+    .intake-box,
+    .page-intro-header,
+    section > .container > div[style*="grid"] > div,
+    section > .container > div[style*="linear-gradient"],
+    .footer-grid > div
+  `);
+
+  if (!elementsToReveal.length) return;
+
+  // Stagger delays within sibling groups
+  document.querySelectorAll('.services-grid-3, .portfolio-grid-3, .insta-preview-grid, .home-stats-strip, .footer-grid').forEach(grid => {
+    Array.from(grid.children).forEach((child, index) => {
+      const delayClass = `delay-${Math.min((index + 1) * 100, 500)}`;
+      child.classList.add(delayClass);
+    });
+  });
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal-active');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -30px 0px'
+  });
+
+  elementsToReveal.forEach(el => {
+    el.classList.add('reveal-init');
+    observer.observe(el);
+  });
+}
+
+/* ==========================================================================
+   9. ANIMATED NUMBER COUNTERS
+   ========================================================================== */
+function initStatCounters() {
+  const statNumbers = document.querySelectorAll('.stat-num');
+  if (!statNumbers.length) return;
+
+  const counterObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  statNumbers.forEach(stat => counterObserver.observe(stat));
+}
+
+function animateCounter(el) {
+  const rawText = el.textContent.trim();
+  const match = rawText.match(/([<+]?\s*)(\d+(\.\d+)?)(\s*[%+x]?)/);
+  if (!match) return;
+
+  const prefix = match[1] || '';
+  const targetNum = parseFloat(match[2]);
+  const suffix = match[4] || '';
+  const isDecimal = match[2].includes('.');
+
+  const duration = 1600;
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Ease out cubic
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const currentVal = targetNum * easeOut;
+
+    el.textContent = `${prefix}${isDecimal ? currentVal.toFixed(1) : Math.floor(currentVal)}${suffix}`;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = rawText; // Ensure exact final text
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+/* ==========================================================================
+   10. 3D CARD PERSPECTIVE TILT (DESKTOP)
+   ========================================================================== */
+function init3DCardTilt() {
+  if (window.innerWidth < 1024 || !window.matchMedia('(hover: hover)').matches) return;
+
+  const tiltCards = document.querySelectorAll('.home-showcase-card, .card-service, .instagram-spotlight-card');
+
+  tiltCards.forEach(card => {
+    let ticking = false;
+
+    card.addEventListener('mousemove', (e) => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((centerY - y) / centerY) * 7;
+        const rotateY = ((x - centerX) / centerX) * 7;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px)`;
+        ticking = false;
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
+
+/* ==========================================================================
+   11. FLOATING BACK TO TOP BUTTON
+   ========================================================================== */
+function initBackToTop() {
+  let btn = document.getElementById('backToTopBtn');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'backToTopBtn';
+    btn.className = 'back-to-top-btn';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.setAttribute('title', 'Back to top');
+    btn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
+    `;
+    document.body.appendChild(btn);
+  }
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 350) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+/* ==========================================================================
+   12. LIVE ACTIVITY NOTIFICATION TOASTS
+   ========================================================================== */
+function initLiveActivityToasts() {
+  let container = document.getElementById('activityToastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'activityToastContainer';
+    container.className = 'activity-toast-container';
+    document.body.appendChild(container);
+  }
+
+  const activities = [
+    { icon: '🚀', title: 'New Web Project Brief', text: 'E-commerce platform inquiry submitted in Client Portal' },
+    { icon: '📈', title: 'Ad Performance Milestone', text: 'Client ad campaign reached 4.8x ROAS on Meta Ads' },
+    { icon: '⚡', title: 'Rapid Delivery', text: 'Custom High-Converting Landing Page deployed in 48h' },
+    { icon: '📸', title: 'Social Branding', text: 'New Growth Case Study published on @HAPPYHEART_MEDIA' },
+    { icon: '💼', title: 'Full Growth Suite', text: 'New business onboarded for complete Web & Ad scaling' }
+  ];
+
+  let currentIndex = 0;
+
+  function showNextToast() {
+    const item = activities[currentIndex];
+    currentIndex = (currentIndex + 1) % activities.length;
+
+    const toast = document.createElement('div');
+    toast.className = 'activity-toast';
+    toast.innerHTML = `
+      <div class="activity-toast-icon">${item.icon}</div>
+      <div class="activity-toast-content">
+        <div class="activity-toast-title">${item.title}</div>
+        <div>${item.text}</div>
+      </div>
+    `;
+
+    container.innerHTML = '';
+    container.appendChild(toast);
+
+    // Trigger animation in next frame
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    // Remove after 5.5s
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        if (toast.parentNode === container) {
+          container.removeChild(toast);
+        }
+      }, 400);
+    }, 5500);
+  }
+
+  // Show first toast after 4.5 seconds, then every 16 seconds
+  setTimeout(() => {
+    showNextToast();
+    setInterval(showNextToast, 16000);
+  }, 4500);
 }
