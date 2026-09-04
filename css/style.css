@@ -199,14 +199,17 @@ a {
 }
 
 .btn-insta {
-  background: var(--insta-gradient);
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(225, 48, 108, 0.25);
+  background: #ffffff;
+  color: #e1306c;
+  border: 1.5px solid rgba(225, 48, 108, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .btn-insta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(225, 48, 108, 0.4);
+  background: #fdf2f8;
+  border-color: #e1306c;
+  box-shadow: 0 6px 20px rgba(225, 48, 108, 0.15);
 }
 
 .btn-whatsapp {
@@ -224,6 +227,10 @@ a {
 .btn-sm {
   padding: 8px 18px;
   font-size: 0.86rem;
+}
+
+.btn-full {
+  width: 100%;
 }
 
 /* ==========================================================================
@@ -460,7 +467,7 @@ a {
   font-family: var(--font-heading);
   font-size: 1.6rem;
   font-weight: 800;
-  color: var(--gold-dark);
+  color: var(--text-main);
 }
 
 .stat-label {
@@ -513,6 +520,213 @@ a {
 }
 
 /* ==========================================================================
+   UTILITY CLASSES (replaces inline styles)
+   ========================================================================== */
+.showcase-pill-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.pill-tag {
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.pill-tag-neutral {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.pill-tag-gold {
+  background: var(--gold-light);
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.pill-tag-pink {
+  background: #fdf2f8;
+  color: #db2777;
+}
+
+.pill-tag-purple {
+  background: #f3e8ff;
+  color: #7e22ce;
+}
+
+.card-service-icon.icon-purple {
+  background: #f3e8ff;
+  border-color: rgba(126, 34, 206, 0.3);
+  color: #7e22ce;
+}
+
+.cta-banner {
+  background: linear-gradient(135deg, #ffffff 0%, #fef9e7 100%);
+  border: 2px solid var(--border-gold-strong);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  text-align: center;
+  box-shadow: var(--gold-shadow);
+}
+
+.cta-banner-title {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+}
+
+.cta-banner-desc {
+  max-width: 580px;
+  margin: 0 auto 28px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.cta-banner-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.insta-tile-emoji {
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.insta-tile-title {
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.insta-tile-label {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.footer-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.drawer-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-mini-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-gold-strong);
+}
+
+.drawer-title {
+  font-size: 1.15rem;
+}
+
+.drawer-list-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.drawer-list-label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+
+.drawer-clear-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.insta-title {
+  font-size: 1.35rem;
+  margin-bottom: 4px;
+}
+
+.insta-actions-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.insta-follow-note {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.section-pad-sm {
+  padding: 40px 0 70px;
+}
+
+.section-pad-md {
+  padding: 30px 0 70px;
+}
+
+.section-pad-cta {
+  padding: 20px 0 60px;
+}
+
+.how-it-works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.step-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.step-num {
+  font-size: 2.2rem;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--gold-primary);
+  margin-bottom: 12px;
+}
+
+.step-title {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.link-insta {
+  color: #e1306c;
+  font-weight: 700;
+}
+
+.link-whatsapp {
+  color: var(--whatsapp-color);
+  font-weight: 700;
+}
+
+/* ==========================================================================
    SERVICES & CARDS
    ========================================================================== */
 .services-section {
@@ -521,7 +735,7 @@ a {
 
 .services-grid-3 {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 28px;
   margin-bottom: 40px;
 }
