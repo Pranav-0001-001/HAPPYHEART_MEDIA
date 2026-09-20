@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register | HAPPY HEART MEDIA</title>
+  <meta name="description" content="Sign in or create your HAPPY HEART MEDIA client account to submit and track your project requirements.">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="stylesheet" href="css/style.css?v=5">
+  <style>
+    /* Auth Page Specific Styles */
+    .auth-page-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 20px 60px;
+    }
+
+    .auth-card {
+      background: var(--glass-bg, rgba(255,255,255,0.03));
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-primary, #d4a843), var(--gold-light, #f0d78c), var(--gold-primary, #d4a843));
+    }
+
+    .auth-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 8px;
+      justify-content: center;
+    }
+
+    .auth-logo-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .auth-brand-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main, #f1f1f1);
+      letter-spacing: -0.3px;
+    }
+
+    .auth-heading {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 20px 0 6px;
+      color: var(--text-main, #f1f1f1);
+    }
+
+    .auth-subtext {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted, #999);
+      margin-bottom: 28px;
+    }
+
+    /* Toggle Tabs */
+    .auth-tabs {
+      display: flex;
+      background: rgba(255,255,255,0.04);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 28px;
+      border: 1px solid var(--border-light, rgba(255,255,255,0.06));
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 11px 0;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted, #888);
+      cursor: pointer;
+      border-radius: 9px;
+      transition: all 0.3s ease;
+      border: none;
+      background: none;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, var(--gold-primary, #d4a843), var(--gold-dark, #b8922e));
+      color: #000;
+      box-shadow: 0 4px 14px rgba(212, 168, 67, 0.35);
+    }
+
+    .auth-tab:not(.active):hover {
+      color: var(--text-main, #f1f1f1);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Forms */
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+      animation: authFadeIn 0.35s ease;
+    }
+
+    @keyframes authFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .auth-field {
+      margin-bottom: 18px;
+    }
+
+    .auth-field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-muted, #aaa);
+    }
+
+    .auth-field .req { color: #ef4444; }
+
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 10px;
+      color: var(--text-main, #f1f1f1);
+      font-size: 0.95rem;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      outline: none;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    .auth-input:focus {
+      border-color: var(--gold-primary, #d4a843);
+      box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
+    }
+
+    .auth-input::placeholder {
+      color: var(--text-dim, #555);
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--gold-primary, #d4a843), var(--gold-dark, #b8922e));
+      color: #000;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    .auth-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(212, 168, 67, 0.4);
+    }
+
+    .auth-submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .auth-error {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+      animation: authFadeIn 0.25s ease;
+    }
+
+    .auth-error.visible {
+      display: block;
+    }
+
+    .auth-success {
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      color: #86efac;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      display: none;
+      animation: authFadeIn 0.25s ease;
+    }
+
+    .auth-success.visible {
+      display: block;
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0;
+      color: var(--text-dim, #555);
+      font-size: 0.8rem;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light, rgba(255,255,255,0.06));
+    }
+
+    .auth-footer-note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-dim, #666);
+      margin-top: 20px;
+    }
+
+    .auth-footer-note a {
+      color: var(--gold-primary, #d4a843);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .auth-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 520px) {
+      .auth-card {
+        padding: 32px 24px;
+      }
+      .auth-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-link">
+        <img src="assets/images/logo.png" alt="HAPPY HEART MEDIA Logo" class="brand-logo-img">
+        <div class="brand-text-wrap">
+          <span class="brand-name">HAPPY HEART <span class="gold-text">MEDIA</span></span>
+          <span class="brand-tagline-nav">Websites That Work • Ads That Grow</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="services.html" class="nav-link">Services & Pricing</a></li>
+          <li><a href="submit-work.html" class="nav-link">Give Us Work</a></li>
+          <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+          <li><a href="contact.html" class="nav-link">Contact & FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta btn-sm">
+          📸 @HAPPYHEART_MEDIA
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-drawer" id="mobileMenu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link">Services & Pricing</a>
+      <a href="submit-work.html" class="nav-link">Give Us Work</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="contact.html" class="nav-link">Contact & FAQ</a>
+      <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="btn btn-insta btn-sm" style="width: 100%;">Follow @HAPPYHEART_MEDIA</a>
+    </div>
+  </header>
+
+  <!-- Auth Section -->
+  <div class="auth-page-wrap">
+    <div class="auth-card">
+      <div class="auth-logo-row">
+        <img src="assets/images/logo.png" alt="HHM" class="auth-logo-img">
+        <span class="auth-brand-name">HAPPY HEART <span class="gold-text">MEDIA</span></span>
+      </div>
+
+      <h1 class="auth-heading" id="authHeading">Welcome Back</h1>
+      <p class="auth-subtext" id="authSubtext">Log in to submit & track your project requirements.</p>
+
+      <!-- Tab Switcher -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" data-tab="login">Sign In</button>
+        <button class="auth-tab" id="registerTab" data-tab="register">Create Account</button>
+      </div>
+
+      <!-- Error / Success Messages -->
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-success" id="authSuccess"></div>
+
+      <!-- LOGIN FORM -->
+      <form class="auth-form active" id="loginForm">
+        <div class="auth-field">
+          <label for="loginEmail">Email Address <span class="req">*</span></label>
+          <input type="email" id="loginEmail" class="auth-input" placeholder="you@example.com" required autocomplete="email">
+        </div>
+
+        <div class="auth-field">
+          <label for="loginPassword">Password <span class="req">*</span></label>
+          <input type="password" id="loginPassword" class="auth-input" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="loginSubmitBtn">🔓 Sign In</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form class="auth-form" id="registerForm">
+        <div class="auth-row-2">
+          <div class="auth-field">
+            <label for="regName">Full Name <span class="req">*</span></label>
+            <input type="text" id="regName" class="auth-input" placeholder="Jane Smith" required autocomplete="name">
+          </div>
+
+          <div class="auth-field">
+            <label for="regCompany">Brand / Company</label>
+            <input type="text" id="regCompany" class="auth-input" placeholder="e.g. Apex Studio" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="regEmail">Email Address <span class="req">*</span></label>
+          <input type="email" id="regEmail" class="auth-input" placeholder="you@example.com" required autocomplete="email">
+        </div>
+
+        <div class="auth-field">
+          <label for="regPhone">WhatsApp / Phone Number</label>
+          <input type="tel" id="regPhone" class="auth-input" placeholder="+1 234 567 8900" autocomplete="tel">
+        </div>
+
+        <div class="auth-field">
+          <label for="regPassword">Create Password <span class="req">*</span> <span style="font-weight:400; color: var(--text-dim);">(min 6 characters)</span></label>
+          <input type="password" id="regPassword" class="auth-input" placeholder="••••••••" required minlength="6" autocomplete="new-password">
+        </div>
+
+        <button type="submit" class="auth-submit-btn" id="registerSubmitBtn">🚀 Create Account</button>
+      </form>
+
+      <div class="auth-divider">Secure & Confidential</div>
+
+      <div class="auth-footer-note">
+        🔒 Your data is encrypted and only visible to you and the HAPPY HEART MEDIA team.
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar">
+        <div>© 2026 HAPPY HEART MEDIA. "Websites That Work. Ads That Grow."</div>
+        <div><a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" style="color:#e1306c; font-weight:700;">@HAPPYHEART_MEDIA</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js?v=5"></script>
+</body>
+</html>

@@ -2,11 +2,13 @@
  * HAPPY HEART MEDIA - APPLICATION JAVASCRIPT
  * "Websites That Work. Ads That Grow."
  * Instagram: @HAPPYHEART_MEDIA
+ *
+ * Updated: Backend API integration + session auth
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Global Submissions Storage & Counter
-  initSubmissionsStorage();
+  // Check Auth State & Update Nav
+  initAuthState();
 
   // Navigation Mobile Menu
   initMobileMenu();
@@ -51,6 +53,91 @@ document.addEventListener('DOMContentLoaded', () => {
     initFaqAccordion();
   }
 });
+
+/* ==========================================================================
+   0. AUTH STATE MANAGEMENT
+   ========================================================================== */
+let currentUser = null;
+
+async function initAuthState() {
+  try {
+    const res = await fetch('/api/auth/me');
+    const data = await res.json();
+    if (data.user) {
+      currentUser = data.user;
+    }
+  } catch (err) {
+    // API not available (static serving) or not logged in
+    currentUser = null;
+  }
+  updateNavAuthUI();
+}
+
+function updateNavAuthUI() {
+  // Update the Client Portal button and add login/logout to nav
+  const navActions = document.querySelector('.nav-actions');
+  if (!navActions) return;
+
+  // Remove existing auth buttons if any
+  const existingAuth = navActions.querySelector('.nav-auth-btn');
+  if (existingAuth) existingAuth.remove();
+
+  const existingAdminLink = navActions.querySelector('.nav-admin-link');
+  if (existingAdminLink) existingAdminLink.remove();
+
+  if (currentUser) {
+    // Show admin link for admin users
+    if (currentUser.role === 'admin') {
+      const adminLink = document.createElement('a');
+      adminLink.href = 'admin.html';
+      adminLink.className = 'btn btn-secondary btn-sm nav-admin-link';
+      adminLink.textContent = '🛡️ Dashboard';
+      adminLink.style.cssText = 'font-size: 0.78rem;';
+      navActions.insertBefore(adminLink, navActions.firstChild);
+    }
+
+    // Show logout button
+    const logoutBtn = document.createElement('button');
+    logoutBtn.className = 'btn btn-secondary btn-sm nav-auth-btn';
+    logoutBtn.innerHTML = `👋 ${escapeHtml(currentUser.name.split(' ')[0])}`;
+    logoutBtn.style.cssText = 'font-size: 0.78rem; cursor: pointer;';
+    logoutBtn.title = `Logged in as ${currentUser.email} — Click to log out`;
+    logoutBtn.addEventListener('click', async () => {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+      } catch (e) {}
+      currentUser = null;
+      window.location.reload();
+    });
+    navActions.insertBefore(logoutBtn, navActions.querySelector('.menu-toggle'));
+  } else {
+    // Show login button
+    const loginBtn = document.createElement('a');
+    loginBtn.href = 'auth.html';
+    loginBtn.className = 'btn btn-secondary btn-sm nav-auth-btn';
+    loginBtn.textContent = '🔑 Login';
+    loginBtn.style.cssText = 'font-size: 0.78rem;';
+    navActions.insertBefore(loginBtn, navActions.querySelector('.menu-toggle'));
+  }
+
+  // Update submission counter from server if logged in
+  if (currentUser) {
+    fetchSubmissionsCount();
+  }
+}
+
+async function fetchSubmissionsCount() {
+  try {
+    const res = await fetch('/api/submissions');
+    if (res.ok) {
+      const data = await res.json();
+      const counter = document.getElementById('submissionCounter');
+      if (counter) {
+        counter.textContent = (data.submissions || []).length;
+      }
+    }
+  } catch (e) {}
+}
 
 /* ==========================================================================
    1. NAVIGATION
@@ -114,8 +201,24 @@ function initIntakeForm() {
     });
   });
 
+  // Auto-fill fields from logged-in user
+  if (currentUser) {
+    const nameField = document.getElementById('clientName');
+    const emailField = document.getElementById('clientEmail');
+    const phoneField = document.getElementById('clientPhone');
+    const companyField = document.getElementById('clientCompany');
+
+    if (nameField && !nameField.value) nameField.value = currentUser.name || '';
+    if (emailField && !emailField.value) emailField.value = currentUser.email || '';
+    if (phoneField && !phoneField.value) phoneField.value = currentUser.phone || '';
+    if (companyField && !companyField.value) companyField.value = currentUser.company || '';
+  }
+
+  // Show login prompt if not authenticated
+  showAuthPromptIfNeeded();
+
   // Form Submission
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const selectedService = document.querySelector('input[name="serviceCategory"]:checked')?.value || 'Website Development';
@@ -130,37 +233,114 @@ function initIntakeForm() {
     const clientPhone = document.getElementById('clientPhone').value.trim();
     const preferredContact = document.getElementById('preferredContact').value;
 
-    const randomId = Math.floor(1000 + Math.random() * 9000);
-    const ticketId = `HHM-2026-${randomId}`;
+    // If user is logged in, submit to API
+    if (currentUser) {
+      try {
+        const res = await fetch('/api/submissions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            service: selectedService,
+            title: projectTitle,
+            description: projectDescription,
+            timeline: projectTimeline,
+            links: projectLinks,
+            budget: projectBudget,
+            clientName,
+            clientCompany,
+            clientEmail,
+            clientPhone,
+            preferredContact
+          })
+        });
 
-    const submissionData = {
-      id: ticketId,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-      service: selectedService,
-      title: projectTitle,
-      description: projectDescription,
-      timeline: projectTimeline,
-      links: projectLinks,
-      budget: projectBudget,
-      clientName: clientName,
-      clientCompany: clientCompany,
-      clientEmail: clientEmail,
-      clientPhone: clientPhone,
-      preferredContact: preferredContact,
-      status: 'New Request'
-    };
+        const result = await res.json();
 
-    // Save to LocalStorage
-    saveSubmission(submissionData);
+        if (res.ok) {
+          const submissionData = {
+            id: result.submission.ticket_id,
+            date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+            service: selectedService,
+            title: projectTitle,
+            description: projectDescription,
+            timeline: projectTimeline,
+            links: projectLinks,
+            budget: projectBudget,
+            clientName,
+            clientCompany,
+            clientEmail,
+            clientPhone,
+            preferredContact,
+            status: 'New Request'
+          };
 
-    // Show Confirmation Modal
-    openSuccessModal(submissionData);
+          openSuccessModal(submissionData);
+          fetchSubmissionsCount();
 
-    // Reset Form
-    form.reset();
-    if (radioCards[0]) radioCards[0].click();
-    if (budgetPills[1]) budgetPills[1].click();
+          form.reset();
+          if (radioCards[0]) radioCards[0].click();
+          if (budgetPills[1]) budgetPills[1].click();
+
+          // Re-fill user details
+          if (currentUser) {
+            const nameField = document.getElementById('clientName');
+            const emailField = document.getElementById('clientEmail');
+            const phoneField = document.getElementById('clientPhone');
+            const companyField = document.getElementById('clientCompany');
+            if (nameField) nameField.value = currentUser.name || '';
+            if (emailField) emailField.value = currentUser.email || '';
+            if (phoneField) phoneField.value = currentUser.phone || '';
+            if (companyField) companyField.value = currentUser.company || '';
+          }
+        } else {
+          alert(result.error || 'Failed to submit. Please try again.');
+        }
+      } catch (err) {
+        alert('Network error. Please check your connection and try again.');
+      }
+    } else {
+      // Not logged in — redirect to auth page
+      window.location.href = 'auth.html?redirect=submit-work.html';
+    }
   });
+}
+
+function showAuthPromptIfNeeded() {
+  if (currentUser) return;
+
+  const form = document.getElementById('projectIntakeForm');
+  if (!form) return;
+
+  // Insert a login prompt banner at the top of the form
+  const existingPrompt = document.getElementById('authPromptBanner');
+  if (existingPrompt) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'authPromptBanner';
+  banner.style.cssText = `
+    background: linear-gradient(135deg, rgba(212,168,67,0.12), rgba(212,168,67,0.04));
+    border: 1px solid rgba(212,168,67,0.25);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  `;
+  banner.innerHTML = `
+    <div style="font-size: 0.9rem; color: var(--text-main, #f1f1f1);">
+      <strong>🔑 Sign in to submit your project</strong>
+      <div style="font-size: 0.82rem; color: var(--text-muted, #888); margin-top: 3px;">
+        Create a free account to submit and privately track your project requirements.
+      </div>
+    </div>
+    <a href="auth.html?redirect=submit-work.html" class="btn btn-gold btn-sm" style="white-space: nowrap;">
+      Sign In / Register →
+    </a>
+  `;
+  form.insertBefore(banner, form.firstChild);
 }
 
 function openSuccessModal(data) {
@@ -274,57 +454,6 @@ Direct Contact: Instagram @HAPPYHEART_MEDIA
 /* ==========================================================================
    3. GLOBAL SUBMISSIONS STORAGE & DRAWER (CLIENT PORTAL)
    ========================================================================== */
-const STORAGE_KEY = 'hhm_client_submissions';
-
-function initSubmissionsStorage() {
-  const existing = localStorage.getItem(STORAGE_KEY);
-  if (!existing) {
-    const sampleSubmissions = [
-      {
-        id: 'HHM-2026-8940',
-        date: 'Sep 3, 2026, 09:30 PM',
-        service: 'Website Development',
-        title: 'Modern Luxury Apparel Brand Storefront',
-        description: 'Need a sleek, mobile-optimized online store with dark aesthetic, gold accents, smooth checkout, and Instagram feed integration.',
-        timeline: 'Standard: 1 - 2 Weeks',
-        links: 'https://figma.com/sample-apparel',
-        budget: '$1,500 - $3,000',
-        clientName: 'Alexander Vance',
-        clientCompany: 'Vance Luxury Wear',
-        clientEmail: 'alex@vancewear.com',
-        clientPhone: '+1 (555) 234-8901',
-        preferredContact: 'WhatsApp',
-        status: 'In Progress'
-      }
-    ];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(sampleSubmissions));
-  }
-  updateSubmissionsCount();
-}
-
-function getSubmissions() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch (e) {
-    return [];
-  }
-}
-
-function saveSubmission(submission) {
-  const list = getSubmissions();
-  list.unshift(submission);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-  updateSubmissionsCount();
-  renderSubmissionsList();
-}
-
-function updateSubmissionsCount() {
-  const list = getSubmissions();
-  const counter = document.getElementById('submissionCounter');
-  if (counter) {
-    counter.textContent = list.length;
-  }
-}
 
 function initSubmissionsDrawer() {
   const openBtn = document.getElementById('openDrawerBtn');
@@ -354,52 +483,82 @@ function initSubmissionsDrawer() {
   }
 
   if (clearBtn) {
-    clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear your local submission history?')) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
-        updateSubmissionsCount();
-        renderSubmissionsList();
-      }
-    });
+    // Hide clear button when using API (submissions are server-managed)
+    if (currentUser) {
+      clearBtn.style.display = 'none';
+    }
   }
 }
 
-function renderSubmissionsList() {
+async function renderSubmissionsList() {
   const container = document.getElementById('submissionsListContainer');
   if (!container) return;
 
-  const submissions = getSubmissions();
-
-  if (submissions.length === 0) {
+  // If logged in, fetch from API
+  if (currentUser) {
     container.innerHTML = `
-      <div style="text-align: center; padding: 40px 10px; color: var(--text-dim);">
-        <p style="font-size: 2rem; margin-bottom: 8px;">📋</p>
-        <p style="font-weight: 700; color: var(--text-muted);">No submissions found</p>
-        <p style="font-size: 0.85rem; margin-top: 4px;">Submit a project on the "Give Us Work" page to see it recorded here.</p>
+      <div style="text-align: center; padding: 30px 10px; color: var(--text-dim);">
+        <p style="font-size: 0.85rem;">Loading your submissions...</p>
       </div>
     `;
-    return;
-  }
 
-  container.innerHTML = submissions.map(item => `
-    <div class="submission-card">
-      <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-        <span style="font-weight:800; color:var(--gold-dark); font-size:0.9rem;">${item.id}</span>
-        <span style="font-size:0.75rem; background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:9999px; font-weight:700;">${item.status || 'New'}</span>
+    try {
+      const res = await fetch('/api/submissions');
+      const data = await res.json();
+      const submissions = data.submissions || [];
+
+      if (submissions.length === 0) {
+        container.innerHTML = `
+          <div style="text-align: center; padding: 40px 10px; color: var(--text-dim);">
+            <p style="font-size: 2rem; margin-bottom: 8px;">📋</p>
+            <p style="font-weight: 700; color: var(--text-muted);">No submissions found</p>
+            <p style="font-size: 0.85rem; margin-top: 4px;">Submit a project on the "Give Us Work" page to see it here.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = submissions.map(item => `
+        <div class="submission-card">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="font-weight:800; color:var(--gold-dark); font-size:0.9rem;">${escapeHtml(item.ticket_id)}</span>
+            <span style="font-size:0.75rem; background:#ecfdf5; color:#065f46; padding:2px 8px; border-radius:9999px; font-weight:700;">${escapeHtml(item.status || 'New')}</span>
+          </div>
+          <h4 style="font-size:0.98rem; margin-bottom:4px; color:var(--text-main);">${escapeHtml(item.title)}</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">${escapeHtml((item.description || '').substring(0, 100))}${(item.description || '').length > 100 ? '...' : ''}</p>
+          <div style="font-size:0.78rem; color:var(--text-dim); margin-bottom:10px;">
+            ${escapeHtml(item.service)} • ${escapeHtml(item.budget)} • ${escapeHtml(item.timeline)}
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-light); padding-top:8px;">
+            <span style="font-size:0.76rem; color:var(--text-dim);">By: ${escapeHtml(item.client_name)}</span>
+            <span style="font-size:0.76rem; color:var(--text-dim);">${new Date(item.created_at + 'Z').toLocaleDateString()}</span>
+          </div>
+        </div>
+      `).join('');
+
+      // Update counter
+      const counter = document.getElementById('submissionCounter');
+      if (counter) counter.textContent = submissions.length;
+
+    } catch (err) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 40px 10px; color: var(--text-dim);">
+          <p style="font-weight: 700; color: #fca5a5;">Failed to load submissions</p>
+          <p style="font-size: 0.85rem; margin-top: 4px;">Please check your connection and try again.</p>
+        </div>
+      `;
+    }
+  } else {
+    // Not logged in — show login prompt in drawer
+    container.innerHTML = `
+      <div style="text-align: center; padding: 40px 10px; color: var(--text-dim);">
+        <p style="font-size: 2rem; margin-bottom: 8px;">🔑</p>
+        <p style="font-weight: 700; color: var(--text-muted);">Sign in to view submissions</p>
+        <p style="font-size: 0.85rem; margin-top: 4px; margin-bottom: 16px;">Log in to your account to view and track your project submissions.</p>
+        <a href="auth.html" class="btn btn-gold btn-sm" style="display: inline-block;">Sign In / Register</a>
       </div>
-      <h4 style="font-size:0.98rem; margin-bottom:4px; color:var(--text-main);">${escapeHtml(item.title)}</h4>
-      <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:8px;">${escapeHtml(item.description.substring(0, 100))}${item.description.length > 100 ? '...' : ''}</p>
-      <div style="font-size:0.78rem; color:var(--text-dim); margin-bottom:10px;">
-        ${escapeHtml(item.service)} • ${escapeHtml(item.budget)} • ${escapeHtml(item.timeline)}
-      </div>
-      <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-light); padding-top:8px;">
-        <span style="font-size:0.76rem; color:var(--text-dim);">By: ${escapeHtml(item.clientName)}</span>
-        <button onclick='window.downloadSingleBrief(${JSON.stringify(item).replace(/'/g, "&#39;")})' style="background:none; border:none; color:var(--gold-primary); font-weight:700; font-size:0.8rem; cursor:pointer;">
-          Download Brief ↓
-        </button>
-      </div>
-    </div>
-  `).join('');
+    `;
+  }
 }
 
 window.downloadSingleBrief = function(data) {
@@ -453,6 +612,7 @@ function initFaqAccordion() {
 }
 
 function escapeHtml(string) {
+  if (!string) return '';
   const div = document.createElement('div');
   div.textContent = string;
   return div.innerHTML;

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | HAPPY HEART MEDIA</title>
+  <meta name="description" content="HAPPY HEART MEDIA Admin Dashboard — View and manage all client project submissions.">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="stylesheet" href="css/style.css?v=5">
+  <style>
+    /* Admin Dashboard Styles */
+    .admin-page-wrap {
+      padding: 100px 20px 60px;
+      min-height: 100vh;
+    }
+
+    .admin-header-card {
+      background: var(--glass-bg, rgba(255,255,255,0.03));
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 18px;
+      padding: 32px 36px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .admin-header-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ef4444, var(--gold-primary, #d4a843), #8b5cf6);
+    }
+
+    .admin-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .admin-header-left img {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+    }
+
+    .admin-header-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main, #f1f1f1);
+    }
+
+    .admin-header-sub {
+      font-size: 0.85rem;
+      color: var(--text-dim, #666);
+      margin-top: 2px;
+    }
+
+    .admin-role-badge {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .admin-logout-btn {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #fca5a5;
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .admin-logout-btn:hover {
+      background: rgba(239, 68, 68, 0.25);
+      color: #fee2e2;
+    }
+
+    /* Stats Bar */
+    .admin-stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .admin-stat-card {
+      background: var(--glass-bg, rgba(255,255,255,0.03));
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 14px;
+      padding: 22px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .admin-stat-card:hover {
+      border-color: var(--gold-primary, #d4a843);
+      transform: translateY(-2px);
+    }
+
+    .admin-stat-num {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-primary, #d4a843), var(--gold-light, #f0d78c));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .admin-stat-label {
+      font-size: 0.82rem;
+      color: var(--text-dim, #666);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Filter / Search Bar */
+    .admin-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .admin-search-input {
+      flex: 1;
+      min-width: 240px;
+      padding: 11px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 10px;
+      color: var(--text-main, #f1f1f1);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.25s ease;
+      font-family: inherit;
+    }
+
+    .admin-search-input:focus {
+      border-color: var(--gold-primary, #d4a843);
+    }
+
+    .admin-filter-select {
+      padding: 11px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 10px;
+      color: var(--text-main, #f1f1f1);
+      font-size: 0.85rem;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .admin-filter-select option {
+      background: #1a1a2e;
+      color: #f1f1f1;
+    }
+
+    /* Submissions Table/List */
+    .admin-submissions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .admin-submission-card {
+      background: var(--glass-bg, rgba(255,255,255,0.03));
+      border: 1px solid var(--border-light, rgba(255,255,255,0.08));
+      border-radius: 16px;
+      padding: 26px 28px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .admin-submission-card:hover {
+      border-color: var(--gold-primary, #d4a843);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+
+    .admin-submission-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .admin-submission-card[data-status="New Request"]::after { background: #3b82f6; }
+    .admin-submission-card[data-status="In Progress"]::after { background: var(--gold-primary, #d4a843); }
+    .admin-submission-card[data-status="Completed"]::after { background: #22c55e; }
+    .admin-submission-card[data-status="On Hold"]::after { background: #f59e0b; }
+    .admin-submission-card[data-status="Cancelled"]::after { background: #ef4444; }
+
+    .admin-sub-toprow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .admin-sub-ticket {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--gold-primary, #d4a843);
+    }
+
+    .admin-sub-date {
+      font-size: 0.78rem;
+      color: var(--text-dim, #555);
+    }
+
+    .admin-sub-status {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .status-new       { background: rgba(59,130,246,0.15); color: #93c5fd; }
+    .status-progress   { background: rgba(212,168,67,0.15); color: #f0d78c; }
+    .status-completed  { background: rgba(34,197,94,0.15); color: #86efac; }
+    .status-hold       { background: rgba(245,158,11,0.15); color: #fcd34d; }
+    .status-cancelled  { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+    .admin-sub-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main, #f1f1f1);
+      margin-bottom: 6px;
+    }
+
+    .admin-sub-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted, #999);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .admin-sub-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .admin-sub-meta-item {
+      font-size: 0.82rem;
+      color: var(--text-dim, #777);
+    }
+
+    .admin-sub-meta-item strong {
+      color: var(--text-muted, #aaa);
+    }
+
+    .admin-sub-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-light, rgba(255,255,255,0.06));
+    }
+
+    .admin-status-select {
+      padding: 7px 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-light, rgba(255,255,255,0.1));
+      border-radius: 8px;
+      color: var(--text-main, #f1f1f1);
+      font-size: 0.82rem;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .admin-status-select option {
+      background: #1a1a2e;
+      color: #f1f1f1;
+    }
+
+    .admin-update-btn {
+      padding: 7px 16px;
+      background: linear-gradient(135deg, var(--gold-primary, #d4a843), var(--gold-dark, #b8922e));
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .admin-update-btn:hover {
+      box-shadow: 0 4px 12px rgba(212,168,67,0.35);
+    }
+
+    /* Empty State */
+    .admin-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-dim, #555);
+    }
+
+    .admin-empty-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .admin-empty h3 {
+      font-size: 1.1rem;
+      color: var(--text-muted, #888);
+      margin-bottom: 6px;
+    }
+
+    /* Access Denied */
+    .admin-denied {
+      text-align: center;
+      padding: 120px 20px;
+    }
+
+    .admin-denied h2 {
+      font-size: 1.8rem;
+      color: #ef4444;
+      margin-bottom: 12px;
+    }
+
+    .admin-denied p {
+      color: var(--text-muted, #888);
+      margin-bottom: 24px;
+    }
+
+    /* Loading */
+    .admin-loading {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-dim, #666);
+      font-size: 0.9rem;
+    }
+
+    .admin-loading .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: var(--gold-primary, #d4a843);
+      border-radius: 50%;
+      animation: adminSpin 0.7s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes adminSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 640px) {
+      .admin-header-card {
+        padding: 24px 20px;
+      }
+      .admin-submission-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-link">
+        <img src="assets/images/logo.png" alt="HAPPY HEART MEDIA Logo" class="brand-logo-img">
+        <div class="brand-text-wrap">
+          <span class="brand-name">HAPPY HEART <span class="gold-text">MEDIA</span></span>
+          <span class="brand-tagline-nav">Websites That Work • Ads That Grow</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="services.html" class="nav-link">Services & Pricing</a></li>
+          <li><a href="submit-work.html" class="nav-link">Give Us Work</a></li>
+          <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+          <li><a href="contact.html" class="nav-link">Contact & FAQ</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta btn-sm">
+          📸 @HAPPYHEART_MEDIA
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-drawer" id="mobileMenu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="services.html" class="nav-link">Services & Pricing</a>
+      <a href="submit-work.html" class="nav-link">Give Us Work</a>
+      <a href="portfolio.html" class="nav-link">Portfolio</a>
+      <a href="contact.html" class="nav-link">Contact & FAQ</a>
+    </div>
+  </header>
+
+  <!-- Admin Content -->
+  <div class="admin-page-wrap">
+    <div class="container">
+      <!-- Loading -->
+      <div id="adminLoading" class="admin-loading">
+        <div class="spinner"></div>
+        Verifying admin access...
+      </div>
+
+      <!-- Access Denied (hidden by default) -->
+      <div id="adminDenied" class="admin-denied" style="display: none;">
+        <h2>🔒 Access Denied</h2>
+        <p>This dashboard is restricted to HAPPY HEART MEDIA administrators.</p>
+        <a href="auth.html" class="btn btn-gold">Sign In as Admin</a>
+      </div>
+
+      <!-- Admin Dashboard (hidden by default) -->
+      <div id="adminDashboard" style="display: none;">
+        <!-- Header -->
+        <div class="admin-header-card">
+          <div class="admin-header-left">
+            <img src="assets/images/logo.png" alt="HHM">
+            <div>
+              <div class="admin-header-title">Developer Dashboard</div>
+              <div class="admin-header-sub" id="adminUserName">HAPPY HEART MEDIA</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            <span class="admin-role-badge">🛡️ Admin</span>
+            <button class="admin-logout-btn" id="adminLogoutBtn">Sign Out</button>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats-bar">
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="statTotal">0</div>
+            <div class="admin-stat-label">Total Submissions</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="statNew">0</div>
+            <div class="admin-stat-label">New Requests</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="statProgress">0</div>
+            <div class="admin-stat-label">In Progress</div>
+          </div>
+          <div class="admin-stat-card">
+            <div class="admin-stat-num" id="statCompleted">0</div>
+            <div class="admin-stat-label">Completed</div>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="admin-filter-bar">
+          <input type="text" class="admin-search-input" id="adminSearch" placeholder="🔍 Search by ticket, name, title, email...">
+          <select class="admin-filter-select" id="adminStatusFilter">
+            <option value="all">All Statuses</option>
+            <option value="New Request">New Request</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="On Hold">On Hold</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <select class="admin-filter-select" id="adminServiceFilter">
+            <option value="all">All Services</option>
+            <option value="Website Development">Website Development</option>
+            <option value="Ads & Marketing">Ads & Marketing</option>
+            <option value="Full Growth Suite">Full Growth Suite</option>
+            <option value="Social Media & Branding">Social & Branding</option>
+            <option value="Custom Task">Custom Task</option>
+          </select>
+        </div>
+
+        <!-- Submissions List -->
+        <div class="admin-submissions-list" id="adminSubmissionsList">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom-bar">
+        <div>© 2026 HAPPY HEART MEDIA. "Websites That Work. Ads That Grow."</div>
+        <div><a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" style="color:#e1306c; font-weight:700;">@HAPPYHEART_MEDIA</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/admin.js?v=5"></script>
+</body>
+</html>
