@@ -2107,6 +2107,157 @@ textarea.form-ctrl {
   }
 }
 
+/* ==========================================================================
+   COLD-START LOADING OVERLAY — "Waking Up the Server"
+   Shown while the Render free-tier backend boots from a cold start.
+   ========================================================================== */
+
+.cold-start-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-body, #08090e);
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.cold-start-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Animated pulse ring behind the logo */
+.cold-start-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.cold-start-ring::before,
+.cold-start-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--gold-primary, #d4a843);
+  animation: coldStartRingPulse 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.cold-start-ring::after {
+  animation-delay: 0.6s;
+}
+
+@keyframes coldStartRingPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+}
+
+/* Heartbeat logo in the center */
+.cold-start-logo {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+  animation: coldStartHeartbeat 1.3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(212, 168, 67, 0.4));
+}
+
+@keyframes coldStartHeartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  56% { transform: scale(1); }
+}
+
+/* Text content */
+.cold-start-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main, #f8fafc);
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+
+.cold-start-subtitle {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.82rem;
+  color: var(--text-muted, #94a3b8);
+  margin-bottom: 28px;
+  text-align: center;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+/* Progress bar */
+.cold-start-progress-track {
+  width: 220px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full, 9999px);
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.cold-start-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--gold-gradient, linear-gradient(135deg, #fce8a6, #d4a843, #b8860b));
+  border-radius: var(--radius-full, 9999px);
+  transition: width 0.4s ease;
+}
+
+/* Status message */
+.cold-start-status {
+  font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.75rem;
+  color: var(--text-dim, #64748b);
+  letter-spacing: 0.3px;
+  min-height: 18px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .cold-start-ring {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 24px;
+  }
+  .cold-start-logo {
+    width: 56px;
+    height: 56px;
+  }
+  .cold-start-title {
+    font-size: 1rem;
+  }
+  .cold-start-subtitle {
+    font-size: 0.78rem;
+    max-width: 260px;
+  }
+  .cold-start-progress-track {
+    width: 180px;
+  }
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -2120,5 +2271,8 @@ textarea.form-ctrl {
   .reveal-init {
     opacity: 1 !important;
     transform: none !important;
+  }
+  .cold-start-overlay {
+    transition: none !important;
   }
 }
