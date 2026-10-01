@@ -78,6 +78,15 @@ function initLoginForm() {
   const form = document.getElementById('loginForm');
   if (!form) return;
 
+  const quickFillBtn = document.getElementById('devQuickFillBtn');
+  if (quickFillBtn) {
+    quickFillBtn.addEventListener('click', () => {
+      document.getElementById('loginEmail').value = 'admin@happyheartmedia.com';
+      document.getElementById('loginPassword').value = 'HHM@admin2026';
+      showSuccess('Developer credentials filled! Click "Sign In" or press Enter.');
+    });
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearMessages();

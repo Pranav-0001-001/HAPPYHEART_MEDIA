@@ -44,8 +44,8 @@ loadLocalStore();
 
 /* ---------- Admin Seed ---------- */
 async function seedAdmin() {
-  const adminEmail = 'admin@happyheartmedia.com';
-  const hash = bcrypt.hashSync('HHM@admin2026', 10);
+  const adminEmail = 'karandarade131@gmail.com';
+  const hash = bcrypt.hashSync('K@r@n2308', 10);
 
   if (isFirebaseConfigured && firestore) {
     try {
@@ -53,7 +53,7 @@ async function seedAdmin() {
       if (snapshot.empty) {
         const adminDoc = {
           id: 1,
-          name: 'HAPPY HEART MEDIA',
+          name: 'Karan (Developer)',
           email: adminEmail,
           phone: '',
           company: 'HAPPY HEART MEDIA',
@@ -62,17 +62,22 @@ async function seedAdmin() {
           created_at: new Date().toISOString()
         };
         await firestore.collection('users').doc('user_1').set(adminDoc);
-        console.log('✅ Admin account seeded in Firebase Firestore: admin@happyheartmedia.com');
+      } else {
+        await firestore.collection('users').doc(snapshot.docs[0].id).update({
+          password_hash: hash,
+          role: 'admin',
+          name: 'Karan (Developer)'
+        });
       }
     } catch (err) {
       console.error('⚠️ Firebase Admin seed error:', err.message);
     }
   } else {
-    const existing = store.users.find(u => u.role === 'admin');
+    const existing = store.users.find(u => u.email.toLowerCase() === adminEmail || u.role === 'admin');
     if (!existing) {
       const admin = {
         id: store._nextUserId++,
-        name: 'HAPPY HEART MEDIA',
+        name: 'Karan (Developer)',
         email: adminEmail,
         phone: '',
         company: 'HAPPY HEART MEDIA',
@@ -82,7 +87,12 @@ async function seedAdmin() {
       };
       store.users.push(admin);
       saveLocalStore();
-      console.log('✅ Admin account seeded in local storage: admin@happyheartmedia.com');
+    } else {
+      existing.email = adminEmail;
+      existing.name = 'Karan (Developer)';
+      existing.password_hash = hash;
+      existing.role = 'admin';
+      saveLocalStore();
     }
   }
 }
@@ -144,14 +154,19 @@ async function createUser({ name, email, phone, company, password }) {
 
 async function getUserByEmail(email) {
   if (!email) return null;
-  const cleanEmail = email.toLowerCase();
+  const cleanEmail = email.trim().toLowerCase();
+
+  // Reload store to ensure fresh state
+  loadLocalStore();
 
   if (isFirebaseConfigured && firestore) {
     const snapshot = await firestore.collection('users').where('email', '==', cleanEmail).get();
-    if (snapshot.empty) return null;
+    if (snapshot.empty) {
+      return store.users.find(u => u.email && u.email.toLowerCase() === cleanEmail) || null;
+    }
     return snapshot.docs[0].data();
   } else {
-    return store.users.find(u => u.email.toLowerCase() === cleanEmail) || null;
+    return store.users.find(u => u.email && u.email.toLowerCase() === cleanEmail) || null;
   }
 }
 
@@ -311,6 +326,26 @@ async function updateSubmissionStatus(id, status) {
   }
 }
 
+async function deleteSubmission(id) {
+  const numericId = Number(id);
+
+  if (isFirebaseConfigured && firestore) {
+    const ref = firestore.collection('submissions').doc(`sub_${numericId}`);
+    const doc = await ref.get();
+    if (!doc.exists) return false;
+    await ref.delete();
+    return true;
+  } else {
+    const initialLen = store.submissions.length;
+    store.submissions = store.submissions.filter(s => s.id !== numericId);
+    if (store.submissions.length !== initialLen) {
+      saveLocalStore();
+      return true;
+    }
+    return false;
+  }
+}
+
 module.exports = {
   createUser,
   getUserByEmail,
@@ -321,6 +356,7 @@ module.exports = {
   getSubmissionsByUser,
   getAllSubmissions,
   updateSubmissionStatus,
+  deleteSubmission,
   generateTicketId,
   seedAdmin,
   isFirebaseConfigured

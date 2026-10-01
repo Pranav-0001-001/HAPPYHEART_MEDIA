@@ -73,7 +73,5 @@ app.listen(PORT, () => {
   console.log(`  📋 Admin:   http://localhost:${PORT}/admin.html`);
   console.log(`  🔑 Login:   http://localhost:${PORT}/auth.html`);
   console.log('========================================================');
-  console.log('  Admin Login: admin@happyheartmedia.com / HHM@admin2026');
-  console.log('========================================================');
   console.log('');
 });

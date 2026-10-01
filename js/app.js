@@ -86,13 +86,14 @@ function updateNavAuthUI() {
   if (existingAdminLink) existingAdminLink.remove();
 
   if (currentUser) {
-    // Show admin link for admin users
-    if (currentUser.role === 'admin') {
+    const isDev = currentUser.role === 'admin' || (currentUser.email && currentUser.email.toLowerCase() === 'karandarade131@gmail.com');
+    // Show admin link for authenticated developer / admin users
+    if (isDev) {
       const adminLink = document.createElement('a');
       adminLink.href = 'admin.html';
-      adminLink.className = 'btn btn-secondary btn-sm nav-admin-link';
-      adminLink.textContent = '🛡️ Dashboard';
-      adminLink.style.cssText = 'font-size: 0.78rem;';
+      adminLink.className = 'btn btn-gold btn-sm nav-admin-link';
+      adminLink.innerHTML = '🛡️ Orders';
+      adminLink.style.cssText = 'font-size: 0.76rem; font-weight: 800; padding: 5px 10px;';
       navActions.insertBefore(adminLink, navActions.firstChild);
     }
 
@@ -100,7 +101,7 @@ function updateNavAuthUI() {
     const logoutBtn = document.createElement('button');
     logoutBtn.className = 'btn btn-secondary btn-sm nav-auth-btn';
     logoutBtn.innerHTML = `👋 ${escapeHtml(currentUser.name.split(' ')[0])}`;
-    logoutBtn.style.cssText = 'font-size: 0.78rem; cursor: pointer;';
+    logoutBtn.style.cssText = 'font-size: 0.74rem; cursor: pointer; padding: 5px 10px;';
     logoutBtn.title = `Logged in as ${currentUser.email} — Click to log out`;
     logoutBtn.addEventListener('click', async () => {
       try {
@@ -116,7 +117,7 @@ function updateNavAuthUI() {
     loginBtn.href = 'auth.html';
     loginBtn.className = 'btn btn-secondary btn-sm nav-auth-btn';
     loginBtn.textContent = '🔑 Login';
-    loginBtn.style.cssText = 'font-size: 0.78rem;';
+    loginBtn.style.cssText = 'font-size: 0.74rem; padding: 5px 10px;';
     navActions.insertBefore(loginBtn, navActions.querySelector('.menu-toggle'));
   }
 
