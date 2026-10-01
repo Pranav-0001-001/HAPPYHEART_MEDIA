@@ -10,6 +10,7 @@
  * - Exporting orders to JSON & CSV
  */
 
+const API_BASE_URL = window.API_BASE_URL || '';
 let allSubmissions = [];
 let activeStatusFilter = 'all';
 
@@ -27,7 +28,7 @@ async function verifyAdminAccess() {
   const dashboard = document.getElementById('adminDashboard');
 
   try {
-    const res = await fetch('/api/auth/me');
+    const res = await fetch(`${API_BASE_URL}/api/auth/me`, { credentials: 'include' });
     const data = await res.json();
 
     const isDev = data.user && (data.user.role === 'admin' || data.user.email.toLowerCase() === 'karandarade131@gmail.com');
@@ -86,9 +87,10 @@ function initAdminLoginForm() {
     btn.textContent = '⏳ Verifying credentials...';
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
       });
 
@@ -147,7 +149,7 @@ function initAdminTabs() {
 /* ---------- Load Submissions ---------- */
 async function loadSubmissions() {
   try {
-    const res = await fetch('/api/submissions');
+    const res = await fetch(`${API_BASE_URL}/api/submissions`, { credentials: 'include' });
     const data = await res.json();
     allSubmissions = data.submissions || [];
     
@@ -293,9 +295,10 @@ async function updateOrderStatus(subId, btn) {
   btn.disabled = true;
 
   try {
-    const res = await fetch(`/api/submissions/${subId}/status`, {
+    const res = await fetch(`${API_BASE_URL}/api/submissions/${subId}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ status: newStatus })
     });
 
@@ -336,8 +339,9 @@ async function deleteOrder(subId) {
   }
 
   try {
-    const res = await fetch(`/api/submissions/${subId}`, {
-      method: 'DELETE'
+    const res = await fetch(`${API_BASE_URL}/api/submissions/${subId}`, {
+      method: 'DELETE',
+      credentials: 'include'
     });
 
     if (res.ok) {
@@ -363,8 +367,9 @@ async function seedDemoOrder() {
   }
 
   try {
-    const res = await fetch('/api/submissions/demo-seed', {
-      method: 'POST'
+    const res = await fetch(`${API_BASE_URL}/api/submissions/demo-seed`, {
+      method: 'POST',
+      credentials: 'include'
     });
 
     if (res.ok) {
@@ -685,7 +690,7 @@ function initAdminLogout() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', async () => {
       try {
-        await fetch('/api/auth/logout', { method: 'POST' });
+        await fetch(`${API_BASE_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
       } catch (e) {}
       window.location.href = 'auth.html';
     });

@@ -23,6 +23,29 @@ const PORT = process.env.PORT || 3000;
 /* ---------- Cold-Start Tracking ---------- */
 const SERVER_BOOT_TIME = Date.now();
 
+/* ---------- CORS Middleware (Cross-Origin for Cloudflare Pages / Static Host) ---------- */
+// TODO: Replace with your actual front-end domain (e.g., 'https://happyheartmedia.com' or 'https://happyheart-media.pages.dev')
+const ALLOWED_ORIGINS = [
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'http://127.0.0.1:5500',
+  process.env.FRONTEND_ORIGIN || 'https://happyheartmedia.com' // TODO: Set your frontend production domain
+];
+
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (origin && (ALLOWED_ORIGINS.includes(origin) || origin.endsWith('.pages.dev') || origin.endsWith('.onrender.com'))) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+  next();
+});
+
 /* ---------- Middleware ---------- */
 
 // Parse JSON bodies
@@ -36,25 +59,41 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false, // Set to true in production with HTTPS
+    secure: process.env.NODE_ENV === 'production', // true with HTTPS in production
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Supports cross-origin API cookies when decoupled
     maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
   }
 }));
 
 /* ---------- Health Check & Keep-Alive ---------- */
 
-// Health-check endpoint for uptime monitors (e.g., UptimeRobot, cron-job.org)
-// Ping this every 10-14 minutes to prevent Render free-tier from sleeping.
-app.get('/api/health', (req, res) => {
+const db = require('./db');
+
+// Lightweight GET /health and GET /api/health for uptime monitors (e.g. UptimeRobot, cron-job.org)
+// Executes a trivial database query to prevent database inactivity pausing and keep instance alive
+async function handleHealthCheck(req, res) {
   const uptimeSeconds = Math.floor((Date.now() - SERVER_BOOT_TIME) / 1000);
+  let dbStatus = 'ok';
+  
+  try {
+    // Trivial database query to keep connection active and check health
+    await db.getUserById(1);
+  } catch (err) {
+    dbStatus = 'degraded: ' + err.message;
+  }
+
   res.status(200).json({
     status: 'ok',
     service: 'HAPPY HEART MEDIA',
+    database: dbStatus,
     uptime: uptimeSeconds,
     bootedAt: new Date(SERVER_BOOT_TIME).toISOString(),
     timestamp: new Date().toISOString()
   });
-});
+}
+
+app.get('/health', handleHealthCheck);
+app.get('/api/health', handleHealthCheck);
 
 // Wake-check endpoint — the frontend calls this on first load.
 // Returns quickly so the loading overlay knows the server is alive.

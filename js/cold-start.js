@@ -20,7 +20,7 @@
   /* ======================================================================
      CONFIG
      ====================================================================== */
-  const WAKE_ENDPOINT = '/api/wake';
+  const WAKE_ENDPOINT = (window.API_BASE_URL || '') + '/api/wake';
   const MAX_RETRIES   = 15;            // up to ~60 s total
   const BASE_DELAY_MS = 1500;          // first retry after 1.5 s
   const MAX_DELAY_MS  = 5000;          // cap individual retry delay

@@ -3,10 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Give Us Work | Client Work Portal | HAPPY HEART MEDIA</title>
-  <meta name="description" content="Submit your website development or advertising project to HAPPY HEART MEDIA. Guaranteed quote and response within 2-4 hours.">
+  <title>Start Your Project | Client Work Portal | HAPPY HEART MEDIA</title>
+  <meta name="description" content="Submit your website development or digital advertising project brief to HAPPY HEART MEDIA. Guaranteed quote and response within 2-4 hours.">
+  <link rel="canonical" href="https://happyheartmedia.com/submit-work.html">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Start Your Project | HAPPY HEART MEDIA">
+  <meta property="og:description" content="Submit your website development or advertising brief. Fast response within 2-4 hours.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:url" content="https://happyheartmedia.com/submit-work.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Start Your Project | HAPPY HEART MEDIA">
+  <meta name="twitter:description" content="Submit your website development or advertising brief. Fast response within 2-4 hours.">
+  <meta name="twitter:image" content="assets/images/logo.png">
+
   <link rel="icon" type="image/png" href="assets/images/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
 
@@ -25,18 +40,17 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="services.html" class="nav-link">Services & Pricing</a></li>
-          <li><a href="submit-work.html" class="nav-link active">Give Us Work</a></li>
           <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
           <li><a href="contact.html" class="nav-link">Contact & FAQ</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-secondary btn-sm" id="openDrawerBtn">
+        <button class="btn btn-secondary btn-sm portal-btn" id="openDrawerBtn" title="View Submitted Work Briefs">
           📋 Client Portal <span class="badge-counter" id="submissionCounter">0</span>
         </button>
-        <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta btn-sm">
-          📸 @HAPPYHEART_MEDIA
+        <a href="submit-work.html" class="btn btn-gold btn-sm">
+          Start Your Project →
         </a>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
       </div>
@@ -46,185 +60,186 @@
     <div class="mobile-menu-drawer" id="mobileMenu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="services.html" class="nav-link">Services & Pricing</a>
-      <a href="submit-work.html" class="nav-link active">Give Us Work</a>
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="contact.html" class="nav-link">Contact & FAQ</a>
-      <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="btn btn-insta btn-sm" style="width: 100%;">Follow @HAPPYHEART_MEDIA</a>
+      <a href="submit-work.html" class="btn btn-gold btn-sm btn-full">Start Your Project →</a>
     </div>
   </header>
 
-  <!-- Page Intro -->
-  <div class="page-intro-header">
-    <div class="container">
-      <div class="section-badge">Client Work Intake</div>
-      <h1 class="page-title">Give Us Your Work to Complete</h1>
-      <p class="page-description">
-        Fill out the simple form below. Our team reviews your brief immediately and delivers an actionable roadmap and quote within 2-4 hours.
-      </p>
-    </div>
-  </div>
-
-  <!-- Intake Box -->
-  <section class="intake-page-wrap">
-    <div class="container">
-      <div class="intake-box">
-        <div class="intake-top-info">
-          <div class="intake-badge-left">
-            <img src="assets/images/logo.png" alt="HHM" class="intake-mini-logo">
-            <div>
-              <h3 style="font-size: 1.2rem;">HAPPY HEART MEDIA • Project Delegation</h3>
-              <p style="color: var(--text-dim); font-size: 0.85rem;">Official Work Request & Brief Registration</p>
-            </div>
-          </div>
-          <div style="background: #ecfdf5; border: 1px solid #a7f3d0; padding: 6px 14px; border-radius: 9999px; font-size: 0.82rem; color: #065f46; font-weight: 700;">
-            ✓ Response Within 2-4 Hours
-          </div>
-        </div>
-
-        <form id="projectIntakeForm">
-          <!-- STEP 1: SERVICE CATEGORY -->
-          <div style="margin-bottom: 32px;">
-            <div class="form-step-title">
-              <span class="step-circle">1</span>
-              <span>Select the Service Needed <span style="color:#ef4444;">*</span></span>
-            </div>
-
-            <div class="service-radio-grid">
-              <label class="service-radio-card active" data-val="Website Development">
-                <input type="radio" name="serviceCategory" value="Website Development" checked>
-                <span>&lt;/&gt; Website Development</span>
-              </label>
-
-              <label class="service-radio-card" data-val="Ads & Marketing">
-                <input type="radio" name="serviceCategory" value="Ads & Marketing">
-                <span>📢 Ads & Marketing</span>
-              </label>
-
-              <label class="service-radio-card" data-val="Full Growth Suite">
-                <input type="radio" name="serviceCategory" value="Full Growth Suite">
-                <span>🚀 Full Growth Suite</span>
-              </label>
-
-              <label class="service-radio-card" data-val="Social Media & Branding">
-                <input type="radio" name="serviceCategory" value="Social Media & Branding">
-                <span>📸 Social & Branding</span>
-              </label>
-
-              <label class="service-radio-card" data-val="Custom Task">
-                <input type="radio" name="serviceCategory" value="Custom Task">
-                <span>⚡ Quick Fix / Custom</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- STEP 2: PROJECT SPECS & BUDGET -->
-          <div style="margin-bottom: 32px;">
-            <div class="form-step-title">
-              <span class="step-circle">2</span>
-              <span>Project Details & Requirements <span style="color:#ef4444;">*</span></span>
-            </div>
-
-            <div class="form-field">
-              <label for="projectTitle">Project Title / Short Summary <span class="req">*</span></label>
-              <input type="text" id="projectTitle" class="form-ctrl" placeholder="e.g. Modern E-commerce Store for Apparel Brand or Meta Ad Campaign for Real Estate" required>
-            </div>
-
-            <div class="form-field">
-              <label for="projectDescription">Scope & Task Description <span class="req">*</span></label>
-              <textarea id="projectDescription" class="form-ctrl" placeholder="Describe what you want built or accomplished: Key features, target audience, preferred colors, competitor references, etc." required></textarea>
-            </div>
-
-            <div class="form-row-2">
-              <div class="form-field">
-                <label for="projectTimeline">Target Delivery Timeline <span class="req">*</span></label>
-                <select id="projectTimeline" class="form-ctrl" required>
-                  <option value="Rush: 3-5 Days">⚡ Rush Express (3 - 5 Days)</option>
-                  <option value="Standard: 1-2 Weeks" selected>🚀 Standard (1 - 2 Weeks)</option>
-                  <option value="Comprehensive: 3-4 Weeks">🏗️ Comprehensive (3 - 4 Weeks)</option>
-                  <option value="Ongoing / Flexible">📅 Flexible / Monthly Retainer</option>
-                </select>
-              </div>
-
-              <div class="form-field">
-                <label for="projectLinks">Reference Links / Figma / Drive</label>
-                <input type="url" id="projectLinks" class="form-ctrl" placeholder="https://figma.com/... or Google Drive URL">
-              </div>
-            </div>
-
-            <!-- Budget Choice -->
-            <label style="display:block; font-size: 0.88rem; font-weight:700; margin-bottom:8px;">Estimated Budget Bracket</label>
-            <div class="budget-pills-wrap">
-              <div class="budget-choice-pill" data-budget="Under $500">Under $500</div>
-              <div class="budget-choice-pill active" data-budget="$500 - $1,500">$500 - $1,500</div>
-              <div class="budget-choice-pill" data-budget="$1,500 - $3,000">$1,500 - $3,000</div>
-              <div class="budget-choice-pill" data-budget="$3,000 - $5,000+">$3,000 - $5,000+</div>
-              <div class="budget-choice-pill" data-budget="Flexible / Negotiable">Custom / Flexible</div>
-            </div>
-            <input type="hidden" id="selectedBudget" value="$500 - $1,500">
-          </div>
-
-          <!-- STEP 3: CONTACT INFORMATION -->
-          <div style="margin-bottom: 36px;">
-            <div class="form-step-title">
-              <span class="step-circle">3</span>
-              <span>Where Should We Send Your Quote? <span style="color:#ef4444;">*</span></span>
-            </div>
-
-            <div class="form-row-2">
-              <div class="form-field">
-                <label for="clientName">Your Full Name <span class="req">*</span></label>
-                <input type="text" id="clientName" class="form-ctrl" placeholder="Jane Smith" required>
-              </div>
-
-              <div class="form-field">
-                <label for="clientCompany">Brand or Business Name</label>
-                <input type="text" id="clientCompany" class="form-ctrl" placeholder="e.g. Apex Studio">
-              </div>
-            </div>
-
-            <div class="form-row-2">
-              <div class="form-field">
-                <label for="clientEmail">Email Address <span class="req">*</span></label>
-                <input type="email" id="clientEmail" class="form-ctrl" placeholder="jane@example.com" required>
-              </div>
-
-              <div class="form-field">
-                <label for="clientPhone">WhatsApp / Phone Number <span class="req">*</span></label>
-                <input type="tel" id="clientPhone" class="form-ctrl" placeholder="+1 234 567 8900" required>
-              </div>
-            </div>
-
-            <div class="form-field">
-              <label for="preferredContact">Preferred Communication Channel</label>
-              <select id="preferredContact" class="form-ctrl">
-                <option value="WhatsApp">WhatsApp (Fastest Response)</option>
-                <option value="Email">Email</option>
-                <option value="Instagram DM (@HAPPYHEART_MEDIA)">Instagram Direct Message</option>
-                <option value="Phone Call">Direct Phone Call</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <div style="border-top: 1px solid var(--border-light); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-            <div style="font-size: 0.82rem; color: var(--text-dim);">
-              🔒 100% Confidential • NDA Available • Fast 2-4h Response
-            </div>
-            <button type="submit" class="btn btn-gold" style="min-width: 240px; padding: 15px 32px; font-size: 1.05rem;">
-              🚀 Submit Work to Complete
-            </button>
-          </div>
-        </form>
+  <main>
+    <!-- Page Intro -->
+    <div class="page-intro-header">
+      <div class="container">
+        <div class="section-badge">Client Work Intake</div>
+        <h1 class="page-title">Share Your Project Brief</h1>
+        <p class="page-description">
+          Fill out the structured form below. I review every project brief personally and deliver an actionable roadmap and quote within 2-4 hours.
+        </p>
       </div>
     </div>
-  </section>
+
+    <!-- Intake Box -->
+    <section class="intake-page-wrap">
+      <div class="container">
+        <div class="intake-box">
+          <div class="intake-top-info">
+            <div class="intake-badge-left">
+              <img src="assets/images/logo.png" alt="HHM Emblem" class="intake-mini-logo">
+              <div>
+                <h2 style="font-size: 1.2rem;">HAPPY HEART MEDIA • Project Intake</h2>
+                <p style="color: var(--text-dim); font-size: 0.85rem;">Official Project Brief Registration</p>
+              </div>
+            </div>
+            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; padding: 6px 14px; border-radius: 9999px; font-size: 0.82rem; color: #065f46; font-weight: 700;">
+              ✓ Response Within 2-4 Hours
+            </div>
+          </div>
+
+          <form id="projectIntakeForm">
+            <!-- STEP 1: SERVICE CATEGORY -->
+            <div style="margin-bottom: 32px;">
+              <div class="form-step-title">
+                <span class="step-circle">1</span>
+                <span>Select the Service Needed <span style="color:#ef4444;">*</span></span>
+              </div>
+
+              <div class="service-radio-grid">
+                <label class="service-radio-card active" data-val="Website Development">
+                  <input type="radio" name="serviceCategory" value="Website Development" checked>
+                  <span>&lt;/&gt; Website Development</span>
+                </label>
+
+                <label class="service-radio-card" data-val="Ads & Marketing">
+                  <input type="radio" name="serviceCategory" value="Ads & Marketing">
+                  <span>📢 Ads & Marketing</span>
+                </label>
+
+                <label class="service-radio-card" data-val="Full Growth Suite">
+                  <input type="radio" name="serviceCategory" value="Full Growth Suite">
+                  <span>🚀 Full Growth Suite</span>
+                </label>
+
+                <label class="service-radio-card" data-val="Social Media & Branding">
+                  <input type="radio" name="serviceCategory" value="Social Media & Branding">
+                  <span>📸 Social & Branding</span>
+                </label>
+
+                <label class="service-radio-card" data-val="Custom Task">
+                  <input type="radio" name="serviceCategory" value="Custom Task">
+                  <span>⚡ Quick Fix / Custom</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- STEP 2: PROJECT SPECS & BUDGET -->
+            <div style="margin-bottom: 32px;">
+              <div class="form-step-title">
+                <span class="step-circle">2</span>
+                <span>Project Details & Requirements <span style="color:#ef4444;">*</span></span>
+              </div>
+
+              <div class="form-field">
+                <label for="projectTitle">Project Title / Short Summary <span class="req">*</span></label>
+                <input type="text" id="projectTitle" class="form-ctrl" placeholder="e.g. Modern E-commerce Store for Luxury Brand or Meta Ads for Real Estate" required>
+              </div>
+
+              <div class="form-field">
+                <label for="projectDescription">Scope & Task Description <span class="req">*</span></label>
+                <textarea id="projectDescription" class="form-ctrl" placeholder="Describe what you want built or accomplished: Key features, target audience, preferred style, competitor references, etc." required></textarea>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-field">
+                  <label for="projectTimeline">Target Delivery Timeline <span class="req">*</span></label>
+                  <select id="projectTimeline" class="form-ctrl" required>
+                    <option value="Rush: 3-5 Days">⚡ Rush Express (3 - 5 Days)</option>
+                    <option value="Standard: 1-2 Weeks" selected>🚀 Standard (1 - 2 Weeks)</option>
+                    <option value="Comprehensive: 3-4 Weeks">🏗️ Comprehensive (3 - 4 Weeks)</option>
+                    <option value="Ongoing / Flexible">📅 Flexible / Monthly Retainer</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label for="projectLinks">Reference Links / Figma / Drive</label>
+                  <input type="url" id="projectLinks" class="form-ctrl" placeholder="https://figma.com/... or Google Drive URL">
+                </div>
+              </div>
+
+              <!-- Budget Choice -->
+              <label style="display:block; font-size: 0.88rem; font-weight:700; margin-bottom:8px;">Estimated Budget Bracket</label>
+              <div class="budget-pills-wrap">
+                <div class="budget-choice-pill" data-budget="Under $500">Under $500</div>
+                <div class="budget-choice-pill active" data-budget="$500 - $1,500">$500 - $1,500</div>
+                <div class="budget-choice-pill" data-budget="$1,500 - $3,000">$1,500 - $3,000</div>
+                <div class="budget-choice-pill" data-budget="$3,000 - $5,000+">$3,000 - $5,000+</div>
+                <div class="budget-choice-pill" data-budget="Flexible / Negotiable">Custom / Flexible</div>
+              </div>
+              <input type="hidden" id="selectedBudget" value="$500 - $1,500">
+            </div>
+
+            <!-- STEP 3: CONTACT INFORMATION -->
+            <div style="margin-bottom: 36px;">
+              <div class="form-step-title">
+                <span class="step-circle">3</span>
+                <span>Where Should I Send Your Quote? <span style="color:#ef4444;">*</span></span>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-field">
+                  <label for="clientName">Your Full Name <span class="req">*</span></label>
+                  <input type="text" id="clientName" class="form-ctrl" placeholder="Jane Smith" required>
+                </div>
+
+                <div class="form-field">
+                  <label for="clientCompany">Brand or Business Name</label>
+                  <input type="text" id="clientCompany" class="form-ctrl" placeholder="e.g. Apex Studio">
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-field">
+                  <label for="clientEmail">Email Address <span class="req">*</span></label>
+                  <input type="email" id="clientEmail" class="form-ctrl" placeholder="jane@example.com" required>
+                </div>
+
+                <div class="form-field">
+                  <label for="clientPhone">WhatsApp / Phone Number <span class="req">*</span></label>
+                  <input type="tel" id="clientPhone" class="form-ctrl" placeholder="+1 234 567 8900" required>
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label for="preferredContact">Preferred Communication Channel</label>
+                <select id="preferredContact" class="form-ctrl">
+                  <option value="WhatsApp">WhatsApp (Fastest Response)</option>
+                  <option value="Email">Email</option>
+                  <option value="Instagram DM (@HAPPYHEART_MEDIA)">Instagram Direct Message</option>
+                  <option value="Phone Call">Direct Phone Call</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="border-top: 1px solid var(--border-light); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+              <div style="font-size: 0.82rem; color: var(--text-dim);">
+                🔒 100% Confidential • NDA Available • Fast 2-4h Response
+              </div>
+              <button type="submit" class="btn btn-gold" style="min-width: 240px; padding: 15px 32px; font-size: 1.05rem;">
+                🚀 Submit Project Brief
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- SUCCESS MODAL -->
   <div class="modal-backdrop" id="successModal">
     <div class="modal-card">
       <button class="close-btn" id="closeModalBtn">&times;</button>
       <div class="success-badge-icon">✓</div>
-      <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Work Submitted Successfully!</h3>
+      <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Project Brief Submitted!</h3>
       <p style="color: var(--text-muted); font-size: 0.95rem;">
         Your project brief has been registered with HAPPY HEART MEDIA. Here is your tracking reference:
       </p>
@@ -238,7 +253,7 @@
           📥 Download Project Brief (.txt)
         </button>
         <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="btn btn-insta" style="width: 100%;">
-          📸 Message us on Instagram @HAPPYHEART_MEDIA
+          📸 Message on Instagram @HAPPYHEART_MEDIA
         </a>
       </div>
     </div>
@@ -248,7 +263,10 @@
   <div class="drawer-backdrop" id="submissionsDrawer">
     <div class="drawer-panel">
       <div class="drawer-header">
-        <h3 style="font-size: 1.15rem;">Client Work Portal</h3>
+        <div class="drawer-title-row">
+          <img src="assets/images/logo.png" alt="HHM" class="drawer-mini-logo">
+          <h3 class="drawer-title">Client Work Portal</h3>
+        </div>
         <button class="close-btn" id="closeDrawerBtn">&times;</button>
       </div>
       <div class="drawer-body">
@@ -264,14 +282,71 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-link footer-brand-row">
+            <img src="assets/images/logo.png" alt="HAPPY HEART MEDIA Logo" class="brand-logo-img" loading="lazy">
+            <span class="brand-name">HAPPY HEART <span class="gold-text">MEDIA</span></span>
+          </div>
+          <p class="footer-desc">
+            Websites that work. Ads that grow. Bespoke freelance web development and digital advertising.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services & Pricing</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html">Contact & FAQ</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-nav">
+            <li><a href="submit-work.html?service=web">Website Development</a></li>
+            <li><a href="submit-work.html?service=ads">Ads & Paid Marketing</a></li>
+            <li><a href="submit-work.html?service=full">Full Growth Suite</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Connect</h4>
+          <ul class="footer-nav">
+            <li>
+              <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="link-insta">
+                📸 Instagram: @HAPPYHEART_MEDIA
+              </a>
+            </li>
+            <li>
+              <a href="contact.html" class="link-whatsapp">
+                📲 WhatsApp Available
+              </a>
+            </li>
+            <li>
+              <a href="mailto:contact@happyheartmedia.com">
+                ✉️ contact@happyheartmedia.com
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <div class="footer-bottom-bar">
         <div>© 2026 HAPPY HEART MEDIA. "Websites That Work. Ads That Grow."</div>
-        <div><a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" style="color:#e1306c; font-weight:700;">@HAPPYHEART_MEDIA</a></div>
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <a href="privacy-policy.html" style="color: var(--text-dim); font-size: 0.82rem;">Privacy Policy</a>
+          <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="link-insta">@HAPPYHEART_MEDIA</a>
+        </div>
       </div>
     </div>
   </footer>
 
+  <script src="js/config.js?v=1"></script>
   <script src="js/cold-start.js?v=1"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>

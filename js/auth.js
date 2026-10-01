@@ -18,10 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initRegisterForm();
 });
 
+const API_BASE_URL = window.API_BASE_URL || '';
+
 /* ---------- Check Existing Session ---------- */
 async function checkExistingSession() {
   try {
-    const res = await fetch('/api/auth/me');
+    const res = await fetch(`${API_BASE_URL}/api/auth/me`, { credentials: 'include' });
     const data = await res.json();
     if (data.user) {
       // Already logged in — redirect appropriately
@@ -103,12 +105,21 @@ function initLoginForm() {
     btn.disabled = true;
     btn.textContent = '⏳ Signing in...';
 
+    // Show friendly wake-up message if request takes longer than 3 seconds
+    const wakeTimer = setTimeout(() => {
+      showWakeNotice('Waking up the server, please wait… (first request may take up to 30s)');
+    }, 3000);
+
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
       });
+
+      clearTimeout(wakeTimer);
+      clearWakeNotice();
 
       const data = await res.json();
 
@@ -131,6 +142,8 @@ function initLoginForm() {
         }
       }, 800);
     } catch (err) {
+      clearTimeout(wakeTimer);
+      clearWakeNotice();
       showError('Network error. Please try again.');
       btn.disabled = false;
       btn.textContent = '🔓 Sign In';
@@ -167,12 +180,20 @@ function initRegisterForm() {
     btn.disabled = true;
     btn.textContent = '⏳ Creating account...';
 
+    const wakeTimer = setTimeout(() => {
+      showWakeNotice('Waking up the server, please wait… (first request may take up to 30s)');
+    }, 3000);
+
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ name, email, phone, company, password })
       });
+
+      clearTimeout(wakeTimer);
+      clearWakeNotice();
 
       const data = await res.json();
 
@@ -190,11 +211,31 @@ function initRegisterForm() {
         window.location.href = redirectTo;
       }, 800);
     } catch (err) {
+      clearTimeout(wakeTimer);
+      clearWakeNotice();
       showError('Network error. Please try again.');
       btn.disabled = false;
       btn.textContent = '🚀 Create Account';
     }
   });
+}
+
+function showWakeNotice(msg) {
+  let notice = document.getElementById('authWakeNotice');
+  if (!notice) {
+    notice = document.createElement('div');
+    notice.id = 'authWakeNotice';
+    notice.className = 'form-wake-notice';
+    const formCard = document.querySelector('.auth-card');
+    if (formCard) formCard.appendChild(notice);
+  }
+  notice.innerHTML = `<span>⏳</span> <span>${msg}</span>`;
+  notice.style.display = 'flex';
+}
+
+function clearWakeNotice() {
+  const notice = document.getElementById('authWakeNotice');
+  if (notice) notice.remove();
 }
 
 /* ---------- Message Helpers ---------- */

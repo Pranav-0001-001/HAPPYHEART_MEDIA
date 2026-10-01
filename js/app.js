@@ -6,6 +6,9 @@
  * Updated: Backend API integration + session auth
  */
 
+const API_BASE_URL = window.API_BASE_URL || '';
+const WHATSAPP_CONTACT_NUMBER = (window.HHM_CONFIG && window.HHM_CONFIG.whatsappNumber) || '15551234567';
+
 document.addEventListener('DOMContentLoaded', () => {
   // Check Auth State & Update Nav
   initAuthState();
@@ -15,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Drawer (Client Portal)
   initSubmissionsDrawer();
+
+  // Floating WhatsApp Contact Button
+  initFloatingWhatsApp();
 
   // Dynamic Ambient Glow & Scroll Progress
   initAmbientBackground();
@@ -61,7 +67,7 @@ let currentUser = null;
 
 async function initAuthState() {
   try {
-    const res = await fetch('/api/auth/me');
+    const res = await fetch(`${API_BASE_URL}/api/auth/me`, { credentials: 'include' });
     const data = await res.json();
     if (data.user) {
       currentUser = data.user;
@@ -105,7 +111,7 @@ function updateNavAuthUI() {
     logoutBtn.title = `Logged in as ${currentUser.email} — Click to log out`;
     logoutBtn.addEventListener('click', async () => {
       try {
-        await fetch('/api/auth/logout', { method: 'POST' });
+        await fetch(`${API_BASE_URL}/api/auth/logout`, { method: 'POST', credentials: 'include' });
       } catch (e) {}
       currentUser = null;
       window.location.reload();
@@ -129,7 +135,7 @@ function updateNavAuthUI() {
 
 async function fetchSubmissionsCount() {
   try {
-    const res = await fetch('/api/submissions');
+    const res = await fetch(`${API_BASE_URL}/api/submissions`, { credentials: 'include' });
     if (res.ok) {
       const data = await res.json();
       const counter = document.getElementById('submissionCounter');
@@ -236,10 +242,21 @@ function initIntakeForm() {
 
     // If user is logged in, submit to API
     if (currentUser) {
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Submitting Project Brief...';
+      }
+
+      const wakeTimer = setTimeout(() => {
+        showFormWakeNotice(form, 'Waking up the server, please wait… (first request may take up to 30s)');
+      }, 3000);
+
       try {
-        const res = await fetch('/api/submissions', {
+        const res = await fetch(`${API_BASE_URL}/api/submissions`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
           body: JSON.stringify({
             service: selectedService,
             title: projectTitle,
@@ -254,6 +271,14 @@ function initIntakeForm() {
             preferredContact
           })
         });
+
+        clearTimeout(wakeTimer);
+        clearFormWakeNotice();
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🚀 Submit Project Brief';
+        }
 
         const result = await res.json();
 
@@ -297,6 +322,12 @@ function initIntakeForm() {
           alert(result.error || 'Failed to submit. Please try again.');
         }
       } catch (err) {
+        clearTimeout(wakeTimer);
+        clearFormWakeNotice();
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🚀 Submit Project Brief';
+        }
         alert('Network error. Please check your connection and try again.');
       }
     } else {
@@ -304,6 +335,23 @@ function initIntakeForm() {
       window.location.href = 'auth.html?redirect=submit-work.html';
     }
   });
+}
+
+function showFormWakeNotice(formEl, msg) {
+  let notice = document.getElementById('formWakeNotice');
+  if (!notice) {
+    notice = document.createElement('div');
+    notice.id = 'formWakeNotice';
+    notice.className = 'form-wake-notice';
+    if (formEl) formEl.appendChild(notice);
+  }
+  notice.innerHTML = `<span>⏳</span> <span>${msg}</span>`;
+  notice.style.display = 'flex';
+}
+
+function clearFormWakeNotice() {
+  const notice = document.getElementById('formWakeNotice');
+  if (notice) notice.remove();
 }
 
 function showAuthPromptIfNeeded() {
@@ -875,11 +923,10 @@ function initLiveActivityToasts() {
   }
 
   const activities = [
-    { icon: '🚀', title: 'New Web Project Brief', text: 'E-commerce platform inquiry submitted in Client Portal' },
-    { icon: '📈', title: 'Ad Performance Milestone', text: 'Client ad campaign reached 4.8x ROAS on Meta Ads' },
+    { icon: '🚀', title: 'New Web Project Brief', text: 'Website inquiry received in Client Portal' },
     { icon: '⚡', title: 'Rapid Delivery', text: 'Custom High-Converting Landing Page deployed in 48h' },
     { icon: '📸', title: 'Social Branding', text: 'New Growth Case Study published on @HAPPYHEART_MEDIA' },
-    { icon: '💼', title: 'Full Growth Suite', text: 'New business onboarded for complete Web & Ad scaling' }
+    { icon: '💼', title: 'Full Growth Suite', text: 'New client onboarded for Web & Ad scaling' }
   ];
 
   let currentIndex = 0;
@@ -922,4 +969,24 @@ function initLiveActivityToasts() {
     showNextToast();
     setInterval(showNextToast, 16000);
   }, 4500);
+}
+
+/* ==========================================================================
+   13. FLOATING WHATSAPP BUTTON
+   ========================================================================== */
+function initFloatingWhatsApp() {
+  if (document.querySelector('.whatsapp-float-btn')) return;
+
+  const btn = document.createElement('a');
+  btn.className = 'whatsapp-float-btn';
+  btn.href = `https://wa.me/${WHATSAPP_CONTACT_NUMBER}?text=${encodeURIComponent('Hi! I would like to discuss a project with Happy Heart Media.')}`;
+  btn.target = '_blank';
+  btn.rel = 'noopener noreferrer';
+  btn.setAttribute('aria-label', 'Contact on WhatsApp');
+  btn.setAttribute('title', 'Direct WhatsApp Contact');
+  btn.innerHTML = `
+    <span>📲</span>
+    <span class="wa-tooltip">Chat with me on WhatsApp</span>
+  `;
+  document.body.appendChild(btn);
 }

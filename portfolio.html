@@ -4,9 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio & Case Studies | HAPPY HEART MEDIA</title>
-  <meta name="description" content="View completed websites, high-ROAS ad campaigns, and brand transformations by HAPPY HEART MEDIA.">
+  <meta name="description" content="View completed websites, performance advertising case studies, and brand transformations engineered by HAPPY HEART MEDIA.">
+  <link rel="canonical" href="https://happyheartmedia.com/portfolio.html">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Portfolio & Case Studies | HAPPY HEART MEDIA">
+  <meta property="og:description" content="View completed websites and performance advertising case studies by HAPPY HEART MEDIA.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:url" content="https://happyheartmedia.com/portfolio.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Portfolio & Case Studies | HAPPY HEART MEDIA">
+  <meta name="twitter:description" content="View completed websites and performance advertising case studies by HAPPY HEART MEDIA.">
+  <meta name="twitter:image" content="assets/images/logo.png">
+
   <link rel="icon" type="image/png" href="assets/images/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
 
@@ -25,21 +40,17 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="services.html" class="nav-link">Services & Pricing</a></li>
-          <li><a href="submit-work.html" class="nav-link">Give Us Work</a></li>
           <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
           <li><a href="contact.html" class="nav-link">Contact & FAQ</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-secondary btn-sm" id="openDrawerBtn">
+        <button class="btn btn-secondary btn-sm portal-btn" id="openDrawerBtn" title="View Submitted Work Briefs">
           📋 Client Portal <span class="badge-counter" id="submissionCounter">0</span>
         </button>
-        <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta btn-sm">
-          📸 @HAPPYHEART_MEDIA
-        </a>
         <a href="submit-work.html" class="btn btn-gold btn-sm">
-          Give Us Work
+          Start Your Project →
         </a>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
       </div>
@@ -49,142 +60,198 @@
     <div class="mobile-menu-drawer" id="mobileMenu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="services.html" class="nav-link">Services & Pricing</a>
-      <a href="submit-work.html" class="nav-link">Give Us Work</a>
       <a href="portfolio.html" class="nav-link active">Portfolio</a>
       <a href="contact.html" class="nav-link">Contact & FAQ</a>
-      <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="btn btn-insta btn-sm" style="width: 100%;">Follow @HAPPYHEART_MEDIA</a>
-      <a href="submit-work.html" class="btn btn-gold btn-sm" style="width: 100%;">Submit Project Now</a>
+      <a href="submit-work.html" class="btn btn-gold btn-sm btn-full">Start Your Project →</a>
     </div>
   </header>
 
-  <!-- Page Intro -->
-  <div class="page-intro-header">
-    <div class="container">
-      <div class="section-badge">Proven Results</div>
-      <h1 class="page-title">Recent Client Work & Case Studies</h1>
-      <p class="page-description">
-        Explore recent custom websites engineered for speed and high-converting advertising campaigns scaled by HAPPY HEART MEDIA.
-      </p>
-    </div>
-  </div>
-
-  <!-- Portfolio Section -->
-  <section style="padding: 10px 0 80px;">
-    <div class="container">
-      <!-- Filter Tabs -->
-      <div class="portfolio-filter-nav">
-        <button class="portfolio-tab active" data-filter="all">All Projects</button>
-        <button class="portfolio-tab" data-filter="web">Websites</button>
-        <button class="portfolio-tab" data-filter="ads">Ads & Marketing</button>
-        <button class="portfolio-tab" data-filter="branding">Branding & Social</button>
-      </div>
-
-      <!-- Grid -->
-      <div class="portfolio-grid-3" id="portfolioGrid">
-        <!-- Item 1 -->
-        <div class="portfolio-item-card" data-category="web">
-          <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: var(--gold-vibrant);">
-            LUMEN
-          </div>
-          <div class="portfolio-card-body">
-            <span class="portfolio-tag">Website Development</span>
-            <h3 class="portfolio-card-title">Lumen Luxury E-Commerce</h3>
-            <p class="portfolio-card-desc">Bespoke online store built with sleek animations, 0.7s page load speed, and streamlined one-page checkout.</p>
-            <div class="portfolio-metric-pill">📈 +218% Mobile Conversions</div>
-            <a href="submit-work.html?service=web" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Build Similar Site →</a>
-          </div>
-        </div>
-
-        <!-- Item 2 -->
-        <div class="portfolio-item-card" data-category="ads">
-          <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #831843, #500724); color: #fbcfe8;">
-            NOVA FIT
-          </div>
-          <div class="portfolio-card-body">
-            <span class="portfolio-tag">Meta Ads Marketing</span>
-            <h3 class="portfolio-card-title">Nova Fitness Scale Campaign</h3>
-            <p class="portfolio-card-desc">Targeted Instagram & Facebook video ads funnel targeting high-intent subscribers with automated lead nurturing.</p>
-            <div class="portfolio-metric-pill">🚀 4.8x Return on Ad Spend (ROAS)</div>
-            <a href="submit-work.html?service=ads" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Scale My Ads →</a>
-          </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="portfolio-item-card" data-category="branding">
-          <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #064e3b, #022c22); color: #a7f3d0;">
-            VERDANT
-          </div>
-          <div class="portfolio-card-body">
-            <span class="portfolio-tag">Social & Branding</span>
-            <h3 class="portfolio-card-title">Verdant Organics Social Identity</h3>
-            <p class="portfolio-card-desc">Complete Instagram visual grid redesign, high-engagement reel storyboarding, and premium corporate branding.</p>
-            <div class="portfolio-metric-pill">🔥 +14,500 Engaged Followers</div>
-            <a href="submit-work.html?service=full" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Elevate My Brand →</a>
-          </div>
-        </div>
-
-        <!-- Item 4 -->
-        <div class="portfolio-item-card" data-category="web">
-          <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #1e3a8a, #172554); color: #bfdbfe;">
-            ZENITH
-          </div>
-          <div class="portfolio-card-body">
-            <span class="portfolio-tag">Web Application</span>
-            <h3 class="portfolio-card-title">Zenith Advisory SaaS Portal</h3>
-            <p class="portfolio-card-desc">Sleek client portal with interactive dashboard, appointment booking integration, and SEO optimization.</p>
-            <div class="portfolio-metric-pill">⚡ 100/100 Lighthouse Performance</div>
-            <a href="submit-work.html?service=web" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Build Web App →</a>
-          </div>
-        </div>
-
-        <!-- Item 5 -->
-        <div class="portfolio-item-card" data-category="ads">
-          <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #78350f, #451a03); color: #fde68a;">
-            METRO LAW
-          </div>
-          <div class="portfolio-card-body">
-            <span class="portfolio-tag">Google Search Ads</span>
-            <h3 class="portfolio-card-title">Metro Legal Lead Generation</h3>
-            <p class="portfolio-card-desc">High-intent Google Search ads with negative keyword pruning and landing page split-testing for qualified leads.</p>
-            <div class="portfolio-metric-pill">🎯 -43% Cost Per Acquisition</div>
-            <a href="submit-work.html?service=ads" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Launch Search Ads →</a>
-          </div>
-        </div>
-
-        <!-- Item 6 -->
-        <div class="portfolio-item-card" data-category="branding">
-          <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #581c87, #3b0764); color: #e9d5ff;">
-            AURA
-          </div>
-          <div class="portfolio-card-body">
-            <span class="portfolio-tag">Full Growth Suite</span>
-            <h3 class="portfolio-card-title">Aura Beauty DTC Rebrand</h3>
-            <p class="portfolio-card-desc">Total overhaul: modern Shopify store, unified Instagram aesthetic, and launch ad campaign driving immediate profitability.</p>
-            <div class="portfolio-metric-pill">🌟 $48,000 First-Month Sales</div>
-            <a href="submit-work.html?service=full" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Launch Full Suite →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- CTA -->
-      <div style="text-align: center; background: var(--bg-card); border: 1.5px solid var(--border-gold); border-radius: var(--radius-xl); padding: 48px 36px; max-width: 780px; margin: 0 auto; box-shadow: var(--card-shadow); backdrop-filter: blur(20px);">
-        <h3 style="font-size: 1.6rem; margin-bottom: 10px;">Want Results Like These for Your Business?</h3>
-        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.05rem;">
-          Send us your project brief today and we'll map out a clear roadmap tailored to your goals.
+  <main>
+    <!-- Page Intro -->
+    <div class="page-intro-header">
+      <div class="container">
+        <div class="section-badge">Proven Results</div>
+        <h1 class="page-title">Client Projects & Case Studies</h1>
+        <p class="page-description">
+          Explore recent custom websites engineered for speed and high-converting advertising campaigns scaled by HAPPY HEART MEDIA.
         </p>
-        <a href="submit-work.html" class="btn btn-gold">
-          🚀 Give Us Your Project Brief
-        </a>
       </div>
     </div>
-  </section>
+
+    <!-- Portfolio Section -->
+    <section style="padding: 10px 0 80px;">
+      <div class="container">
+        <!-- Filter Tabs -->
+        <div class="portfolio-filter-nav">
+          <button class="portfolio-tab active" data-filter="all">All Projects</button>
+          <button class="portfolio-tab" data-filter="web">Websites</button>
+          <button class="portfolio-tab" data-filter="ads">Ads & Marketing</button>
+          <button class="portfolio-tab" data-filter="branding">Branding & Social</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="portfolio-grid-3" id="portfolioGrid">
+          <!-- Item 1 -->
+          <div class="portfolio-item-card" data-category="web">
+            <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: var(--gold-vibrant);">
+              LUMEN
+            </div>
+            <div class="portfolio-card-body">
+              <span class="portfolio-tag">Website Development</span>
+              <h2 class="portfolio-card-title" style="font-size: 1.25rem;">Lumen Luxury E-Commerce</h2>
+              <p class="portfolio-card-desc">Bespoke online store built with sleek animations, 0.7s page load speed, and streamlined one-page checkout.</p>
+              <div class="portfolio-metric-pill">📈 +218% Mobile Conversions</div>
+              <a href="submit-work.html?service=web" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Start Similar Site →</a>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="portfolio-item-card" data-category="ads">
+            <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #831843, #500724); color: #fbcfe8;">
+              NOVA FIT
+            </div>
+            <div class="portfolio-card-body">
+              <span class="portfolio-tag">Meta Ads Marketing</span>
+              <h2 class="portfolio-card-title" style="font-size: 1.25rem;">Nova Fitness Scale Campaign</h2>
+              <p class="portfolio-card-desc">Targeted Instagram & Facebook video ads funnel targeting high-intent subscribers with automated lead nurturing.</p>
+              <div class="portfolio-metric-pill">🚀 4.8x Return on Ad Spend (ROAS)</div>
+              <a href="submit-work.html?service=ads" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Start Ad Campaign →</a>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="portfolio-item-card" data-category="branding">
+            <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #064e3b, #022c22); color: #a7f3d0;">
+              VERDANT
+            </div>
+            <div class="portfolio-card-body">
+              <span class="portfolio-tag">Social & Branding</span>
+              <h2 class="portfolio-card-title" style="font-size: 1.25rem;">Verdant Organics Social Identity</h2>
+              <p class="portfolio-card-desc">Complete Instagram visual grid redesign, high-engagement reel storyboarding, and premium corporate branding.</p>
+              <div class="portfolio-metric-pill">🔥 +14,500 Engaged Followers</div>
+              <a href="submit-work.html?service=full" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Start Brand Project →</a>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="portfolio-item-card" data-category="web">
+            <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #1e3a8a, #172554); color: #bfdbfe;">
+              ZENITH
+            </div>
+            <div class="portfolio-card-body">
+              <span class="portfolio-tag">Web Application</span>
+              <h2 class="portfolio-card-title" style="font-size: 1.25rem;">Zenith Advisory SaaS Portal</h2>
+              <p class="portfolio-card-desc">Sleek client portal with interactive dashboard, appointment booking integration, and SEO optimization.</p>
+              <div class="portfolio-metric-pill">⚡ 100/100 Lighthouse Performance</div>
+              <a href="submit-work.html?service=web" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Start Web App →</a>
+            </div>
+          </div>
+
+          <!-- Item 5 -->
+          <div class="portfolio-item-card" data-category="ads">
+            <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #78350f, #451a03); color: #fde68a;">
+              METRO LAW
+            </div>
+            <div class="portfolio-card-body">
+              <span class="portfolio-tag">Google Search Ads</span>
+              <h2 class="portfolio-card-title" style="font-size: 1.25rem;">Metro Legal Lead Generation</h2>
+              <p class="portfolio-card-desc">High-intent Google Search ads with negative keyword pruning and landing page split-testing for qualified leads.</p>
+              <div class="portfolio-metric-pill">🎯 -43% Cost Per Acquisition</div>
+              <a href="submit-work.html?service=ads" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Launch Search Ads →</a>
+            </div>
+          </div>
+
+          <!-- Item 6 -->
+          <div class="portfolio-item-card" data-category="branding">
+            <div class="portfolio-card-banner" style="background: linear-gradient(135deg, #581c87, #3b0764); color: #e9d5ff;">
+              AURA
+            </div>
+            <div class="portfolio-card-body">
+              <span class="portfolio-tag">Full Growth Suite</span>
+              <h2 class="portfolio-card-title" style="font-size: 1.25rem;">Aura Beauty DTC Rebrand</h2>
+              <p class="portfolio-card-desc">Total overhaul: modern Shopify store, unified Instagram aesthetic, and launch ad campaign driving immediate profitability.</p>
+              <div class="portfolio-metric-pill">🌟 $48,000 First-Month Sales</div>
+              <a href="submit-work.html?service=full" class="btn btn-secondary btn-sm" style="margin-top: 16px; width: 100%;">Launch Full Suite →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div style="text-align: center; background: var(--bg-card); border: 1.5px solid var(--border-gold); border-radius: var(--radius-xl); padding: 48px 36px; max-width: 780px; margin: 0 auto; box-shadow: var(--card-shadow); backdrop-filter: blur(20px);">
+          <h3 style="font-size: 1.6rem; margin-bottom: 10px;">Want Results Like These for Your Business?</h3>
+          <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 1.05rem;">
+            Share your project brief today and I'll map out a clear roadmap tailored to your goals.
+          </p>
+          <a href="submit-work.html" class="btn btn-gold">
+            🚀 Share Your Project Brief →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-link footer-brand-row">
+            <img src="assets/images/logo.png" alt="HAPPY HEART MEDIA Logo" class="brand-logo-img" loading="lazy">
+            <span class="brand-name">HAPPY HEART <span class="gold-text">MEDIA</span></span>
+          </div>
+          <p class="footer-desc">
+            Websites that work. Ads that grow. Bespoke freelance web development and digital advertising.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services & Pricing</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html">Contact & FAQ</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-nav">
+            <li><a href="submit-work.html?service=web">Website Development</a></li>
+            <li><a href="submit-work.html?service=ads">Ads & Paid Marketing</a></li>
+            <li><a href="submit-work.html?service=full">Full Growth Suite</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Connect</h4>
+          <ul class="footer-nav">
+            <li>
+              <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="link-insta">
+                📸 Instagram: @HAPPYHEART_MEDIA
+              </a>
+            </li>
+            <li>
+              <a href="contact.html" class="link-whatsapp">
+                📲 WhatsApp Available
+              </a>
+            </li>
+            <li>
+              <a href="mailto:contact@happyheartmedia.com">
+                ✉️ contact@happyheartmedia.com
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <div class="footer-bottom-bar">
         <div>© 2026 HAPPY HEART MEDIA. "Websites That Work. Ads That Grow."</div>
-        <div><a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" style="color:#e1306c; font-weight:700;">@HAPPYHEART_MEDIA</a></div>
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <a href="privacy-policy.html" style="color: var(--text-dim); font-size: 0.82rem;">Privacy Policy</a>
+          <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="link-insta">@HAPPYHEART_MEDIA</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -193,7 +260,10 @@
   <div class="drawer-backdrop" id="submissionsDrawer">
     <div class="drawer-panel">
       <div class="drawer-header">
-        <h3 style="font-size: 1.15rem;">Client Work Portal</h3>
+        <div class="drawer-title-row">
+          <img src="assets/images/logo.png" alt="HHM" class="drawer-mini-logo">
+          <h3 class="drawer-title">Client Work Portal</h3>
+        </div>
         <button class="close-btn" id="closeDrawerBtn">&times;</button>
       </div>
       <div class="drawer-body">
@@ -202,7 +272,8 @@
     </div>
   </div>
 
+  <script src="js/config.js?v=1"></script>
   <script src="js/cold-start.js?v=1"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>

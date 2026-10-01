@@ -4,9 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Services & Pricing | HAPPY HEART MEDIA</title>
-  <meta name="description" content="Explore transparent pricing for Website Development and Paid Digital Advertising from HAPPY HEART MEDIA.">
+  <meta name="description" content="Transparent pricing for freelance Website Development, Meta Ads, and full-funnel digital growth packages from HAPPY HEART MEDIA.">
+  <link rel="canonical" href="https://happyheartmedia.com/services.html">
+
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Services & Pricing | HAPPY HEART MEDIA">
+  <meta property="og:description" content="Transparent pricing for custom Website Development and Meta Ads marketing packages.">
+  <meta property="og:image" content="assets/images/logo.png">
+  <meta property="og:url" content="https://happyheartmedia.com/services.html">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Services & Pricing | HAPPY HEART MEDIA">
+  <meta name="twitter:description" content="Transparent pricing for custom Website Development and Meta Ads marketing packages.">
+  <meta name="twitter:image" content="assets/images/logo.png">
+
   <link rel="icon" type="image/png" href="assets/images/logo.png">
-  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
 
@@ -25,21 +40,17 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="services.html" class="nav-link active">Services & Pricing</a></li>
-          <li><a href="submit-work.html" class="nav-link">Give Us Work</a></li>
           <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
           <li><a href="contact.html" class="nav-link">Contact & FAQ</a></li>
         </ul>
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-secondary btn-sm" id="openDrawerBtn">
+        <button class="btn btn-secondary btn-sm portal-btn" id="openDrawerBtn" title="View Submitted Work Briefs">
           📋 Client Portal <span class="badge-counter" id="submissionCounter">0</span>
         </button>
-        <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta btn-sm">
-          📸 @HAPPYHEART_MEDIA
-        </a>
         <a href="submit-work.html" class="btn btn-gold btn-sm">
-          Give Us Work
+          Start Your Project →
         </a>
         <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation">☰</button>
       </div>
@@ -49,169 +60,240 @@
     <div class="mobile-menu-drawer" id="mobileMenu">
       <a href="index.html" class="nav-link">Home</a>
       <a href="services.html" class="nav-link active">Services & Pricing</a>
-      <a href="submit-work.html" class="nav-link">Give Us Work</a>
       <a href="portfolio.html" class="nav-link">Portfolio</a>
       <a href="contact.html" class="nav-link">Contact & FAQ</a>
-      <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="btn btn-insta btn-sm" style="width: 100%;">Follow @HAPPYHEART_MEDIA</a>
-      <a href="submit-work.html" class="btn btn-gold btn-sm" style="width: 100%;">Submit Project Now</a>
+      <a href="submit-work.html" class="btn btn-gold btn-sm btn-full">Start Your Project →</a>
     </div>
   </header>
 
-  <!-- Header Intro -->
-  <div class="page-intro-header">
-    <div class="container">
-      <div class="section-badge">Clear & Upfront</div>
-      <h1 class="page-title">Services & Transparent Pricing</h1>
-      <p class="page-description">
-        No hidden surprises or vague hourly estimates. Select the package tailored to your goals or calculate a custom quote in seconds.
-      </p>
-    </div>
-  </div>
-
-  <!-- Services Tiers Grid -->
-  <section class="services-section" style="padding-top: 0;">
-    <div class="container">
-      <div class="services-grid-3">
-        <!-- Web Development Tier -->
-        <div class="card-service">
-          <div class="card-service-icon">&lt;/&gt;</div>
-          <h2 class="card-service-title">Website Development</h2>
-          <p class="card-service-desc">
-            Bespoke, lightning-fast websites engineered to convert cold traffic into customers. Full responsive design and speed optimization.
-          </p>
-          <div class="service-price-tag">Tiers from $399 to $1,399</div>
-          
-          <ul class="feature-check-list">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <strong>Landing Page ($399)</strong>: Single high-converting page
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <strong>Business Site ($799)</strong>: 4-6 pages, SEO, contact forms
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <strong>E-Commerce ($1,399)</strong>: Storefront, Stripe/Shopify, inventory
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Google PageSpeed 95+ score guaranteed
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              3 - 10 Days Turnaround
-            </li>
-          </ul>
-
-          <a href="submit-work.html?service=web" class="btn btn-gold" style="width: 100%;">
-            Delegate Web Work →
-          </a>
-        </div>
-
-        <!-- Ads & Marketing Tier -->
-        <div class="card-service">
-          <div class="card-service-icon">📢</div>
-          <h2 class="card-service-title">Ads & Marketing</h2>
-          <p class="card-service-desc">
-            Targeted paid customer acquisition across Meta (Instagram & Facebook) and Google Search. Designed for immediate ROI.
-          </p>
-          <div class="service-price-tag">Tiers from $450 to $1,200</div>
-          
-          <ul class="feature-check-list">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <strong>Meta Ads Launch ($450)</strong>: Instagram & FB setup
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <strong>Multi-Channel ($750)</strong>: Meta + Google Search Ads
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <strong>Full Funnel Retainer ($1,200)</strong>: Scaling & CRO
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              High-converting copywriting & graphic creatives
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Weekly transparent ROAS analytics reports
-            </li>
-          </ul>
-
-          <a href="submit-work.html?service=ads" class="btn btn-gold" style="width: 100%;">
-            Delegate Ad Campaign →
-          </a>
-        </div>
-
-        <!-- Full Growth Suite -->
-        <div class="card-service" style="border: 2px solid var(--border-gold-strong); background: var(--bg-card);">
-          <div class="card-service-icon" style="background: var(--gold-gradient); color: #090a0f;">★</div>
-          <h2 class="card-service-title">Full Growth Suite</h2>
-          <p class="card-service-desc">
-            The complete brand scaling package: bespoke website, active advertising engine, and unified Instagram visual identity.
-          </p>
-          <div class="service-price-tag" style="background: var(--gold-gradient); color: #090a0f;">$1,499 Flat Package</div>
-          
-          <ul class="feature-check-list">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Complete Custom Website (up to 6 pages)
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Meta Ads Campaign Launch (Instagram + Facebook)
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Instagram Brand Kit & Post Templates (@HAPPYHEART_MEDIA style)
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Pixel & Google Tag Manager tracking configuration
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              Direct WhatsApp Priority Support Line
-            </li>
-          </ul>
-
-          <a href="submit-work.html?service=full" class="btn btn-gold" style="width: 100%;">
-            Get Full Growth Suite →
-          </a>
-        </div>
-      </div>
-
-      <!-- Quick Interactive Estimator -->
-      <div style="background: var(--bg-card); border: 1.5px solid var(--border-gold); border-radius: var(--radius-xl); padding: 36px; max-width: 860px; margin: 40px auto 0; box-shadow: var(--card-shadow); backdrop-filter: blur(20px);">
-        <h3 style="font-size: 1.4rem; margin-bottom: 8px; text-align: center;">Need a Custom Combination?</h3>
-        <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">
-          Submit your project requirements on our intake page, or message us directly on WhatsApp or Instagram for a tailored quote within 2 hours.
+  <main>
+    <!-- Header Intro -->
+    <div class="page-intro-header">
+      <div class="container">
+        <div class="section-badge">Clear & Upfront</div>
+        <h1 class="page-title">Services & Transparent Pricing</h1>
+        <p class="page-description">
+          No hidden surprises or vague hourly fees. Select a package tailored to your growth goals, or share your requirements for a bespoke roadmap.
         </p>
-
-        <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-          <a href="submit-work.html" class="btn btn-gold">
-            Go to Client Intake Form →
-          </a>
-          <a href="https://wa.me/?text=Hi%20Happy%20Heart%20Media,%20I%20need%20a%20quote%20for%20a%20project!" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
-            📲 Message on WhatsApp
-          </a>
-          <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta">
-            📸 DM on Instagram @HAPPYHEART_MEDIA
-          </a>
-        </div>
       </div>
     </div>
-  </section>
+
+    <!-- Services Tiers Grid -->
+    <section class="services-section" style="padding-top: 0;">
+      <div class="container">
+        <div class="services-grid-3">
+          <!-- Web Development Tier -->
+          <div class="card-service">
+            <div class="card-service-icon">&lt;/&gt;</div>
+            <h2 class="card-service-title">Website Development</h2>
+            <p class="card-service-desc">
+              Bespoke, lightning-fast websites engineered to convert cold visitors into customers with full responsive design and technical SEO.
+            </p>
+
+            <div class="service-pricing-block">
+              <div class="service-price-tag">Tiers from $399 to $1,399</div>
+              <!-- TODO: Confirm exact page count, revision count, and turnaround for web packages -->
+              <div class="service-included-note">What's included: 1-6 pages (tier-dependent), mobile-first responsive layout, 2 revision cycles <!-- TODO: confirm revision count -->, core SEO setup.</div>
+            </div>
+            
+            <ul class="feature-check-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <strong>Landing Page ($399)</strong>: Single high-converting page
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <strong>Business Site ($799)</strong>: 4-6 pages, SEO, contact forms
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <strong>E-Commerce ($1,399)</strong>: Storefront, Stripe/Shopify, inventory
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Fast Load Times & SEO
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                3 - 10 Days Turnaround
+              </li>
+            </ul>
+
+            <a href="submit-work.html?service=web" class="btn btn-gold btn-full">
+              Start Your Web Project →
+            </a>
+          </div>
+
+          <!-- Ads & Marketing Tier -->
+          <div class="card-service">
+            <div class="card-service-icon">📢</div>
+            <h2 class="card-service-title">Ads & Marketing</h2>
+            <p class="card-service-desc">
+              Targeted paid customer acquisition across Meta (Instagram & Facebook) and Google Search, focused strictly on ROAS.
+            </p>
+
+            <div class="service-pricing-block">
+              <div class="service-price-tag">Tiers from $450 to $1,200</div>
+              <!-- TODO: Confirm ad spend separation note and monthly retainer terms -->
+              <div class="service-included-note">What's included: Ad copy, static & video creatives, pixel configuration, A/B testing (*ad spend is separate and paid directly to Meta/Google).</div>
+            </div>
+            
+            <ul class="feature-check-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <strong>Meta Ads Launch ($450)</strong>: Instagram & FB setup
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <strong>Multi-Channel ($750)</strong>: Meta + Google Search Ads
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <strong>Full Funnel Retainer ($1,200)</strong>: Scaling & CRO
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                High-converting copywriting & graphic creatives
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Weekly transparent ROAS analytics reports
+              </li>
+            </ul>
+
+            <a href="submit-work.html?service=ads" class="btn btn-gold btn-full">
+              Start Your Ad Campaign →
+            </a>
+          </div>
+
+          <!-- Full Growth Suite -->
+          <div class="card-service" style="border: 2px solid var(--border-gold-strong); background: var(--bg-card);">
+            <div class="card-service-icon" style="background: var(--gold-gradient); color: #090a0f;">★</div>
+            <h2 class="card-service-title">Full Growth Suite</h2>
+            <p class="card-service-desc">
+              The complete brand scaling package: bespoke website, active advertising engine, and unified Instagram visual identity.
+            </p>
+
+            <div class="service-pricing-block">
+              <div class="service-price-tag" style="background: var(--gold-gradient); color: #090a0f;">$1,499 Flat Package</div>
+              <!-- TODO: Confirm suite deliverables -->
+              <div class="service-included-note">What's included: Full custom website (up to 6 pages), Meta ad campaign setup, social templates kit, priority 1-on-1 support.</div>
+            </div>
+            
+            <ul class="feature-check-list">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Complete Custom Website (up to 6 pages)
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Meta Ads Campaign Launch (Instagram + Facebook)
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Instagram Brand Kit & Post Templates
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Pixel & Google Tag Manager tracking configuration
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Direct WhatsApp Priority Support Line
+              </li>
+            </ul>
+
+            <a href="submit-work.html?service=full" class="btn btn-gold btn-full">
+              Start Full Growth Suite →
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Interactive Estimator -->
+        <div style="background: var(--bg-card); border: 1.5px solid var(--border-gold); border-radius: var(--radius-xl); padding: 36px; max-width: 860px; margin: 40px auto 0; box-shadow: var(--card-shadow); backdrop-filter: blur(20px);">
+          <h3 style="font-size: 1.4rem; margin-bottom: 8px; text-align: center;">Need a Custom Combination?</h3>
+          <p style="text-align: center; color: var(--text-muted); margin-bottom: 24px;">
+            Submit your project requirements on the intake form, or message me directly on WhatsApp or Instagram for a tailored quote within 2 hours.
+          </p>
+
+          <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+            <a href="submit-work.html" class="btn btn-gold">
+              Share Your Project Brief →
+            </a>
+            <a href="https://wa.me/?text=Hi%20Happy%20Heart%20Media,%20I%20need%20a%20quote%20for%20a%20project!" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+              📲 Message on WhatsApp
+            </a>
+            <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="btn btn-insta">
+              📸 DM @HAPPYHEART_MEDIA
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand-link footer-brand-row">
+            <img src="assets/images/logo.png" alt="HAPPY HEART MEDIA Logo" class="brand-logo-img" loading="lazy">
+            <span class="brand-name">HAPPY HEART <span class="gold-text">MEDIA</span></span>
+          </div>
+          <p class="footer-desc">
+            Websites that work. Ads that grow. Bespoke freelance web development and digital advertising.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services & Pricing</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html">Contact & FAQ</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Services</h4>
+          <ul class="footer-nav">
+            <li><a href="submit-work.html?service=web">Website Development</a></li>
+            <li><a href="submit-work.html?service=ads">Ads & Paid Marketing</a></li>
+            <li><a href="submit-work.html?service=full">Full Growth Suite</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Connect</h4>
+          <ul class="footer-nav">
+            <li>
+              <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" rel="noopener noreferrer" class="link-insta">
+                📸 Instagram: @HAPPYHEART_MEDIA
+              </a>
+            </li>
+            <li>
+              <a href="contact.html" class="link-whatsapp">
+                📲 WhatsApp Available
+              </a>
+            </li>
+            <li>
+              <a href="mailto:contact@happyheartmedia.com">
+                ✉️ contact@happyheartmedia.com
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <div class="footer-bottom-bar">
         <div>© 2026 HAPPY HEART MEDIA. "Websites That Work. Ads That Grow."</div>
-        <div><a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" style="color:#e1306c; font-weight:700;">@HAPPYHEART_MEDIA</a></div>
+        <div style="display: flex; gap: 16px; align-items: center;">
+          <a href="privacy-policy.html" style="color: var(--text-dim); font-size: 0.82rem;">Privacy Policy</a>
+          <a href="https://www.instagram.com/HAPPYHEART_MEDIA/" target="_blank" class="link-insta">@HAPPYHEART_MEDIA</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -220,7 +302,10 @@
   <div class="drawer-backdrop" id="submissionsDrawer">
     <div class="drawer-panel">
       <div class="drawer-header">
-        <h3 style="font-size: 1.15rem;">Client Work Portal</h3>
+        <div class="drawer-title-row">
+          <img src="assets/images/logo.png" alt="HHM" class="drawer-mini-logo">
+          <h3 class="drawer-title">Client Work Portal</h3>
+        </div>
         <button class="close-btn" id="closeDrawerBtn">&times;</button>
       </div>
       <div class="drawer-body">
@@ -229,7 +314,8 @@
     </div>
   </div>
 
+  <script src="js/config.js?v=1"></script>
   <script src="js/cold-start.js?v=1"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=5"></script>
 </body>
 </html>
